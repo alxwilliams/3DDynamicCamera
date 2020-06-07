@@ -12,6 +12,9 @@ public class CharacterController : MonoBehaviour
     private bool _walking = false;
     private float _zDirection = 0;
     private float _xDirection = 0;
+
+    private float lastDistance;
+    private bool moveCamera = false;
     
     public static class AxisInput {
         public const string LeftHorizontal = "Horizontal";
@@ -30,16 +33,28 @@ public class CharacterController : MonoBehaviour
     private void AdjustCamera()
     {
         
+        var posZ = new Vector3(transform.forward.x * -5.5f,2f,transform.forward.z * -5.5f); // THIS -5 NEEDS TO BE ADJUSTABLE WITH R STICK
+        cam.transform.position = transform.position + (posZ);
 
-        var movement = new Vector3(transform.forward.x * -2,transform.position.y + 3,transform.forward.z * -2);
-        cam.transform.position = transform.position + (movement);
+        var xDiff = transform.position.x - cam.transform.position.x;
+        var zDiff = transform.position.z - cam.transform.position.z;
 
+        var newAngle = Mathf.Atan(xDiff / zDiff) * 180/Mathf.PI;
+
+        if (zDiff <= 0)
+            newAngle = newAngle + 180;
+
+        var currentAngle = cam.transform.eulerAngles.y;
+        var angleDiff = newAngle - currentAngle;
+
+        if (angleDiff > 200)
+            angleDiff -= 360;
+        else if (angleDiff < -200)
+            angleDiff += 360;
+
+        cam.transform.eulerAngles = new Vector3(0, 
+            ((angleDiff/20)>newAngle) ? (newAngle) : (currentAngle +angleDiff / 20), 0); //20 is the number for how slow it pans back to the player
         
-        cam.transform.LookAt(transform.position);
-        /*var point = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);//when using the right hand stick, slightly adjusting this position
-        Vector3 direction = point;
-        Quaternion toRotation = Quaternion.FromToRotation(cam.transform.forward, direction);
-        cam.transform.rotation = Quaternion.Lerp(cam.transform.rotation, toRotation, 1 * Time.time);*/
        
     }
 
@@ -78,7 +93,6 @@ public class CharacterController : MonoBehaviour
             //transform.eulerAngles = new Vector3(0,transform.eulerAngles.y,0);
         }
         transform.position += movement;
-        _walking = false;
     }
 
 }
