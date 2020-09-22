@@ -13,8 +13,7 @@ public class CharacterController : MonoBehaviour
     private float _zDirection = 0;
     private float _xDirection = 0;
 
-    private float lastDistance;
-    private bool moveCamera = false;
+    private Vector3 lastSpot;
     
     public static class AxisInput {
         public const string LeftHorizontal = "Horizontal";
@@ -52,10 +51,16 @@ public class CharacterController : MonoBehaviour
         else if (angleDiff < -200)
             angleDiff += 360;
 
-        cam.transform.eulerAngles = new Vector3(0, 
+        if (currentAngle == newAngle)
+            lastSpot = transform.position;
+
+        Debug.LogError(lastSpot);
+        if(Vector3.Distance(lastSpot, transform.position) > 2) //2 is the distance you need to move beforte the camera starts following you
+            cam.transform.eulerAngles = new Vector3(0, 
             ((angleDiff/20)>newAngle) ? (newAngle) : (currentAngle +angleDiff / 20), 0); //20 is the number for how slow it pans back to the player
         
        
+           
     }
 
     private void Movement(){

@@ -5,7 +5,65 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.AGoodMask3D/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AGoodMask3D/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.AGoodMask3D/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AGoodMask3D/.idea/indexLayout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.AGoodMask3D/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AGoodMask3D/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/AnimationControllers/BasicMotions@Idle.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/AnimationControllers/BasicMotions@Idle.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/AnimationControllers/BasicMotions@Jump.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/AnimationControllers/BasicMotions@Jump.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/AnimationControllers/BasicMotions@Run.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/AnimationControllers/BasicMotions@Run.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/AnimationControllers/BasicMotions@RunBackwards.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/AnimationControllers/BasicMotions@RunBackwards.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/AnimationControllers/BasicMotions@Sprint.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/AnimationControllers/BasicMotions@Sprint.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/AnimationControllers/BasicMotions@Walk.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/AnimationControllers/BasicMotions@Walk.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Animations/BasicMotions@Idle01 - Idle02.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Animations/BasicMotions@Idle01 - Idle02.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Animations/BasicMotions@Idle01.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Animations/BasicMotions@Idle01.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Animations/BasicMotions@Idle02 - Idle01.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Animations/BasicMotions@Idle02 - Idle01.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Animations/BasicMotions@Idle02.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Animations/BasicMotions@Idle02.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Animations/BasicMotions@Jump01.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Animations/BasicMotions@Jump01.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Animations/BasicMotions@Run01.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Animations/BasicMotions@Run01.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Animations/BasicMotions@RunBackwards01.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Animations/BasicMotions@RunBackwards01.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Animations/BasicMotions@Sprint01.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Animations/BasicMotions@Sprint01.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Animations/BasicMotions@Walk01.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Animations/BasicMotions@Walk01.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Basic Motions Pack - Scene.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Basic Motions Pack - Scene.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Materials/Basic Motions Material.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Materials/Basic Motions Material.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Models/Basic Motions Dummy.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Models/Basic Motions Dummy.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Prefabs/Basic Motions Dummy - Idle.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Prefabs/Basic Motions Dummy - Idle.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Prefabs/Basic Motions Dummy - Jump.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Prefabs/Basic Motions Dummy - Jump.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Prefabs/Basic Motions Dummy - Run Backwards.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Prefabs/Basic Motions Dummy - Run Backwards.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Prefabs/Basic Motions Dummy - Run.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Prefabs/Basic Motions Dummy - Run.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Prefabs/Basic Motions Dummy - Sprint.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Prefabs/Basic Motions Dummy - Sprint.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Prefabs/Basic Motions Dummy - Walk.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Prefabs/Basic Motions Dummy - Walk.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Textures/BasicMotionsTexture.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kevin Iglesias/Basic Motions Pack/Textures/BasicMotionsTexture.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/CharacterController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CharacterController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logs/Packages-Update.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/Packages-Update.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/GraphicsSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/GraphicsSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/InputManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/InputManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,11 +76,13 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/CharacterController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F38C71C8-6AA6-4E29-9D4C-EA9FB7C715E1/db/b173059e/Transform.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/ToonLight.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Assets/Scripts/CharacterController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/ToonLight.cs" />
       </list>
     </option>
   </component>
@@ -77,7 +137,9 @@
       <updated>1590539654705</updated>
       <workItem from="1590539659918" duration="452000" />
       <workItem from="1591223218518" duration="24309000" />
-      <workItem from="1591489865955" duration="11430000" />
+      <workItem from="1591489865955" duration="14182000" />
+      <workItem from="1600803639000" duration="6000" />
+      <workItem from="1600804989431" duration="1796000" />
     </task>
     <servers />
   </component>
@@ -151,9 +213,9 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state width="1386" height="361" key="GridCell.Tab.3.right/0.0.2560.1400/-1920.489.1920.1040@0.0.2560.1400" timestamp="1591378753194" />
-    <state x="629" y="423" width="642" height="526" key="find.popup" timestamp="1591297366451">
+    <state x="629" y="423" width="642" height="526" key="find.popup" timestamp="1591631254541">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="629" y="423" width="642" height="526" key="find.popup/0.0.2560.1400/-1920.489.1920.1040@0.0.2560.1400" timestamp="1591297366451" />
+    <state x="629" y="423" width="642" height="526" key="find.popup/0.0.2560.1400/-1920.489.1920.1040@0.0.2560.1400" timestamp="1591631254541" />
   </component>
 </project>
