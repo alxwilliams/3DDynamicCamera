@@ -19,9 +19,9 @@
     </explicitIncludes>
     <explicitExcludes>
       <Path>.idea</Path>
-      <Path>A Good Mask 3D REAL</Path>
       <Path>Library</Path>
       <Path>Logs</Path>
+      <Path>New Unity Project</Path>
       <Path>Temp</Path>
       <Path>obj</Path>
     </explicitExcludes>

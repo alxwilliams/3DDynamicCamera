@@ -65,6 +65,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_F9A5EFF4_Texture_1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -73,7 +77,20 @@ Material:
         m_Texture: {fileID: 2800000, guid: 896559d4b36ad9042863fef1c1947023, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _ToonShaderSubGraph_156C8944_Texture2D1C73F3EB_337571819:
+        m_Texture: {fileID: 2800000, guid: 951cb68fb85bd3343893863e410fb8cc, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ToonShaderSubGraph_282BE227_Texture2D1C73F3EB_337571819:
+        m_Texture: {fileID: 2800000, guid: 951cb68fb85bd3343893863e410fb8cc, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ToonShaderSubGraph_9C31187D_Texture2D1C73F3EB_337571819:
+        m_Texture: {fileID: 2800000, guid: 951cb68fb85bd3343893863e410fb8cc, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Vector1_EC05D7B: 0
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -97,9 +114,17 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - Color_14D1196: {r: 0, g: 0, b: 0, a: 0}
+    - Color_67775219: {r: 1, g: 1, b: 1, a: 0}
     - Vector4_E6208CF6: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _L1_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L1_dir: {r: 0, g: 0, b: 0, a: 0}
+    - _L2_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L2_dir: {r: 0, g: 0, b: 0, a: 0}
+    - _L3_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L3_dir: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
     - _ToonLightDirection: {r: 0.5, g: 0.5, b: 0, a: 0}
