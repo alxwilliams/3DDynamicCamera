@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class CameraControllerFollow : MonoBehaviour
@@ -23,6 +25,9 @@ public class CameraControllerFollow : MonoBehaviour
     [SerializeField] private float _autoZoomOutHeight = 8;
     [SerializeField] private float _autoZoomInHeight = 6;
 
+    [SerializeField] private Animator _strafeController;
+    [SerializeField] private float _strafeLookAroundTime = 1;
+
     private float currentAngleDegrees;
     private Vector3 currentAngleVectorFromplayer;
     private float currentCamHeight;
@@ -36,6 +41,11 @@ public class CameraControllerFollow : MonoBehaviour
     private float currentCamDistanceBack;
 
     private bool onFollow = true;
+    private bool strafeCoroutine = false;
+    private bool strafing = false;
+
+    private Renderer playerRenderer;
+    
 
     public static class AxisInput {
         public const string LEFT_HORIZONTAL = "Horizontal";
@@ -49,6 +59,7 @@ public class CameraControllerFollow : MonoBehaviour
 
     void Start()
     {
+        playerRenderer = player.GetComponentInChildren<Renderer>();
         currentAngleVectorFromplayer = -player.transform.forward;
         currentAngleDegrees = 270;
         currentCamDistanceBack = _camStartingDistanceBack;
@@ -56,17 +67,23 @@ public class CameraControllerFollow : MonoBehaviour
         DetermineCameraDistanceHeightVariables();
     }
 
-    private void StrafeCamera()
+    private void FollowPlayer()
     {
-        if (Input.GetAxis(AxisInput.RIGHT_HORIZONTAL) != 0)
-        {
-            currentAngleDegrees -= Input.GetAxis(AxisInput.RIGHT_HORIZONTAL) * Time.deltaTime * _cameraManualTurnSpeed;
-            currentAngleVectorFromplayer = new Vector3(Mathf.Cos(currentAngleDegrees * Mathf.PI / 180), 0, Mathf.Sin(currentAngleDegrees * Mathf.PI / 180));
-        }
-        
+        FollowPlayerHorizontal();
+        FollowPlayerVertical();
+    }
+
+    private void ManualPlacement()
+    {
+        ManualHorizontal();
+        ManualVertical();
+    }
+
+    private void FollowPlayerVertical()
+    {
         if(Input.GetAxis(AxisInput.LEFT_VERTICAL) != 0)
         {
-            currentCamDistanceBack += Input.GetAxis(AxisInput.LEFT_VERTICAL) * Time.deltaTime * _autoZoomingSpeed *autoDistanceScaledIncrement; //working on this stuff
+            currentCamDistanceBack += Input.GetAxis(AxisInput.LEFT_VERTICAL) * Time.deltaTime * _autoZoomingSpeed *autoDistanceScaledIncrement;
             currentCamHeight -= Input.GetAxis(AxisInput.LEFT_VERTICAL) * Time.deltaTime * _autoZoomingSpeed * autoHeightScaledIncrement;
             
             currentCamHeight = Mathf.Clamp(currentCamHeight, _autoZoomInHeight, _autoZoomOutHeight);
@@ -74,33 +91,26 @@ public class CameraControllerFollow : MonoBehaviour
         }
     }
 
-    private void FollowPlayer()
+    private void FollowPlayerHorizontal()
     {
         if (Input.GetAxis(AxisInput.LEFT_HORIZONTAL) != 0)
         {
             currentAngleDegrees -= Input.GetAxis(AxisInput.LEFT_HORIZONTAL) * Time.deltaTime * _camerAutoTurnSpeed;
             currentAngleVectorFromplayer = new Vector3(Mathf.Cos(currentAngleDegrees * Mathf.PI / 180), 0, Mathf.Sin(currentAngleDegrees * Mathf.PI / 180));
         }
-        
-        if(Input.GetAxis(AxisInput.LEFT_VERTICAL) != 0)
-        {
-            currentCamDistanceBack += Input.GetAxis(AxisInput.LEFT_VERTICAL) * Time.deltaTime * _autoZoomingSpeed *autoDistanceScaledIncrement; //working on this stuff
-            currentCamHeight -= Input.GetAxis(AxisInput.LEFT_VERTICAL) * Time.deltaTime * _autoZoomingSpeed * autoHeightScaledIncrement;
-            
-            currentCamHeight = Mathf.Clamp(currentCamHeight, _autoZoomInHeight, _autoZoomOutHeight);
-            currentCamDistanceBack = Mathf.Clamp(currentCamDistanceBack,_autoZoomInDistance, _autoZoomOutDistance);
-        }
-            
     }
 
-    private void ManualPlacement()
+    private void ManualHorizontal()
     {
         if (Input.GetAxis(AxisInput.RIGHT_HORIZONTAL) != 0)
         {
             currentAngleDegrees -= Input.GetAxis(AxisInput.RIGHT_HORIZONTAL) * Time.deltaTime * _cameraManualTurnSpeed;
             currentAngleVectorFromplayer = new Vector3(Mathf.Cos(currentAngleDegrees * Mathf.PI / 180), 0, Mathf.Sin(currentAngleDegrees * Mathf.PI / 180));
         }
+    }
 
+    private void ManualVertical()
+    {
         if (Input.GetAxis(AxisInput.RIGHT_VERTICAL) != 0)
         {
             currentCamDistanceBack -= Input.GetAxis(AxisInput.RIGHT_VERTICAL) * Time.deltaTime * _manualZoomingSpeed *manualDistanceScaledIncrement;
@@ -113,19 +123,49 @@ public class CameraControllerFollow : MonoBehaviour
     
     private void Update()
     {
-        if (Input.GetAxis(AxisInput.RIGHT_HORIZONTAL) != 0 || Input.GetAxis(AxisInput.RIGHT_VERTICAL) != 0)
-            onFollow = false;
 
         if(Input.GetAxis(AxisInput.LEFT_TRIGGER) != 0)
         {
-            onFollow = true;
-            StrafeCamera();
+            if (!strafing)
+            {
+                strafeCoroutine = true;
+                StartCoroutine(StartStrafe());
+                onFollow = true;
+            }
+            
+            if(!strafeCoroutine)
+            {
+                ManualHorizontal();
+                if(onFollow)
+                    FollowPlayerVertical();
+                else
+                    ManualVertical();
+            }
+            
+            strafing = true;
         }
-        else if(onFollow)
-            FollowPlayer();
         else
-            ManualPlacement();
+        {
+            if(onFollow)
+            {
+                strafing = false;
+                FollowPlayer();
+            }else
+            {
+                strafing = false;
+                ManualPlacement();
+            }
+            
+            if (Input.GetAxis(AxisInput.RIGHT_HORIZONTAL) != 0)
+                onFollow = false;
+        }
         
+        if (Input.GetAxis(AxisInput.RIGHT_VERTICAL) != 0)
+            onFollow = false;
+        
+        _strafeController.SetBool("StrifeOn",strafing);
+
+        AdjustTransparency();
         AdjustCamera();
     }
 
@@ -159,46 +199,60 @@ public class CameraControllerFollow : MonoBehaviour
             autoHeightScaledIncrement = 1;
         }
         
-        currentCamHeight = currentCamDistanceBack / camDistanceDiff * camHeightDiff + _autoZoomInHeight; // adjust the height to the starting distance
+        currentCamHeight = (currentCamDistanceBack - _autoZoomInDistance) / camDistanceDiff * camHeightDiff + _autoZoomInHeight; // adjust the height to the starting distance
+    }
+    
+    private IEnumerator StartStrafe()
+    {
+        
+        float startingAngle = currentAngleDegrees % 360;
+        float endingAngle;
+        float startingDistanceBack = currentCamDistanceBack;
+        float startingCamHeight = currentCamHeight;
+
+        
+
+        for(float t = 0; t< _strafeLookAroundTime; t += Time.deltaTime)
+        {
+            endingAngle = Mathf.Atan2((-player.transform.forward).z,(-player.transform.forward).x) * 180 / Mathf.PI;
+            if (startingAngle >= 180)
+                endingAngle += 360;
+            
+            currentAngleDegrees = Mathf.Lerp(startingAngle, endingAngle, t / _strafeLookAroundTime);
+            currentAngleVectorFromplayer = new Vector3(Mathf.Cos(currentAngleDegrees * Mathf.PI / 180), 0, Mathf.Sin(currentAngleDegrees * Mathf.PI / 180));
+
+            currentCamDistanceBack = Mathf.Lerp(startingDistanceBack, _camStartingDistanceBack, t / _strafeLookAroundTime);
+            currentCamHeight = Mathf.Lerp(currentCamHeight,
+                                        (_camStartingDistanceBack - _manualZoomInDistance) / (_manualZoomOutDistance - _manualZoomInDistance) * 
+                                            (_manualZoomOutHeight - _manualZoomInHeight) + _manualZoomInHeight, //this mess of a function, this second variable is the same at the end of DetermineCameraDistanceHeightVariables() it's just got it's variables not condensed and it's the manual form
+                                        t / _strafeLookAroundTime); 
+            
+            yield return null;
+        }
+
+        strafeCoroutine = false;
     }
     
     // Update is called once per frame
     private void AdjustCamera()
     {
-        
         transform.position = player.transform.position + currentCamDistanceBack * currentAngleVectorFromplayer + new Vector3(0,currentCamHeight,0);
         transform.LookAt(player.transform.position + new Vector3(0,_midBodyLookHeight,0));
-        /*var posZ = new Vector3(transform.forward.x * -5.5f,2f,transform.forward.z * -5.5f); // THIS -5 NEEDS TO BE ADJUSTABLE WITH R STICK
-        transform.position = transform.position + (posZ);
 
-        var xDiff = player.transform.position.x - transform.position.x;
-        var zDiff = player.transform.position.z - transform.position.z;
+    }
 
-        var newAngle = Mathf.Atan(xDiff / zDiff) * 180/Mathf.PI;
-
-        if (zDiff <= 0)
-            newAngle = newAngle + 180;
-
-        var currentAngle = transform.eulerAngles.y;
-        var angleDiff = newAngle - currentAngle;
-
-        if (angleDiff > 200)
-            angleDiff -= 360;
-        else if (angleDiff < -200)
-            angleDiff += 360;*/
-
-        /*if (currentAngle == newAngle)
-            lastSpot = transform.position;
-
-        Debug.LogError(lastSpot);
-        */
-
-        /*if(Vector3.Distance(lastSpot, transform.position) > 2) //2 is the distance you need to move beforte the camera starts following you
-            transform.eulerAngles = new Vector3(0, 
-                ((angleDiff/20)>newAngle) ? (newAngle) : (currentAngle +angleDiff / 20), 0); //20 is the number for how slow it pans back to the player
-                */
-
-
-
+    private void AdjustTransparency()
+    {
+        /*if (currentCamDistanceBack < 5)
+        {
+            float camRatio = (currentCamDistanceBack - 1) / 4;
+            Mathf.Clamp(camRatio, 0, 1);
+             //playerRenderer.material.SetTexture("_Texture",); 
+            playerRenderer.material.SetFloat("_Alpha",camRatio); 
+        }
+        else
+        {
+            playerRenderer.material.SetFloat("_Alpha",1); 
+        }*/
     }
 }

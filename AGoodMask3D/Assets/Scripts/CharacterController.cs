@@ -26,6 +26,7 @@ public class CharacterController : MonoBehaviour
         public const string LEFT_VERTICAL = "Vertical";
         public const string RIGHT_HORIZONTAL = "RHorizontal";
         public const string RIGHT_VERTICAL = "RVertical";
+        public const string LEFT_TRIGGER = "LTrigger";
     }
     
     private void FixedUpdate()
@@ -115,9 +116,11 @@ public class CharacterController : MonoBehaviour
             
         movement *= Time.deltaTime;
 
-        if(_xDirection != 0 || _zDirection !=0){
-            transform.rotation = Quaternion.LookRotation(movement);
-            //transform.eulerAngles = new Vector3(0,transform.eulerAngles.y,0);
+        
+        if(_xDirection != 0 || _zDirection !=0)
+        {
+            if(Input.GetAxis(AxisInput.LEFT_TRIGGER) == 0) //make player face target if player here instead of no turning
+                transform.rotation = Quaternion.LookRotation(movement); //will have to start strafe animation here
         }
         transform.position += movement;
     }
