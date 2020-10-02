@@ -367,7 +367,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 1.78542e-40, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 4.5904e-41, y: -9.79074e-38, z: 4.5904e-41, w: 9.403955e-38}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -410,6 +410,7 @@ GameObject:
   - component: {fileID: 734718296}
   - component: {fileID: 734718295}
   - component: {fileID: 734718294}
+  - component: {fileID: 734718298}
   m_Layer: 0
   m_Name: Cube (2)
   m_TagString: Untagged
@@ -491,6 +492,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &734718298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 734718293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 806c5505cdebb9b40b0ec74058e760b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _minInteractDistance: 100
 --- !u!1 &764913317
 GameObject:
   m_ObjectHideFlags: 0
@@ -593,7 +607,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 1.9995e-41, y: 1.01e-43, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 2.09376e-40, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -617,7 +631,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 004b1abffcf55294fbd08506752a5b3b,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.114189
+      value: 3.96
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 004b1abffcf55294fbd08506752a5b3b,
         type: 3}
@@ -1043,6 +1057,7 @@ GameObject:
   - component: {fileID: 1203593434}
   - component: {fileID: 1203593433}
   - component: {fileID: 1203593432}
+  - component: {fileID: 1203593436}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -1124,6 +1139,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1203593436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1203593431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 806c5505cdebb9b40b0ec74058e760b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _minInteractDistance: 100
 --- !u!1 &1242741667 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 004b1abffcf55294fbd08506752a5b3b,
@@ -1267,8 +1295,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 1.846545e+25, y: 2.3680585e+20, z: 1.6928188e+22,
-    w: 1.5782379e-19}
+  m_BoundingSphereOverride: {x: 0, y: 2.07252e-40, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -1358,6 +1385,7 @@ GameObject:
   - component: {fileID: 1929797548}
   - component: {fileID: 1929797547}
   - component: {fileID: 1929797546}
+  - component: {fileID: 1929797550}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -1439,3 +1467,16 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1929797550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1929797545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 806c5505cdebb9b40b0ec74058e760b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _minInteractDistance: 100

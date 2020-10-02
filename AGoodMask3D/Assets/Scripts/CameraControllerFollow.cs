@@ -43,8 +43,10 @@ public class CameraControllerFollow : MonoBehaviour
     private bool onFollow = true;
     private bool strafeCoroutine = false;
     private bool strafing = false;
+    
+    private Interactable[] interactables = new Interactable[6] {new Interactable(), new Interactable(), new Interactable(), new Interactable(), new Interactable(), new Interactable()};
 
-    private Renderer playerRenderer;
+    //private SkinnedMeshRenderer playerRenderer;
     
 
     public static class AxisInput {
@@ -59,7 +61,7 @@ public class CameraControllerFollow : MonoBehaviour
 
     void Start()
     {
-        playerRenderer = player.GetComponentInChildren<Renderer>();
+        //playerRenderer = player.GetComponentInChildren<SkinnedMeshRenderer>();
         currentAngleVectorFromplayer = -player.transform.forward;
         currentAngleDegrees = 270;
         currentCamDistanceBack = _camStartingDistanceBack;
@@ -98,6 +100,49 @@ public class CameraControllerFollow : MonoBehaviour
             currentAngleDegrees -= Input.GetAxis(AxisInput.LEFT_HORIZONTAL) * Time.deltaTime * _camerAutoTurnSpeed;
             currentAngleVectorFromplayer = new Vector3(Mathf.Cos(currentAngleDegrees * Mathf.PI / 180), 0, Mathf.Sin(currentAngleDegrees * Mathf.PI / 180));
         }
+    }
+
+    public void AddInteractableToList(Interactable obj)
+    {
+        interactables[interactables.Length - 1].AddedToList = false;
+        interactables[interactables.Length - 1] = obj;
+    }
+
+    private void QuickSortInteractables(int low, int high)
+    {
+        if (low < high)
+        {
+            int i = PartitionInteractables(low, high);
+            
+            QuickSortInteractables(low,i-1);
+            QuickSortInteractables(i+1,high);
+        }
+    }
+
+    private int PartitionInteractables(int low, int high)
+    {
+        Interactable pivot = interactables[high];
+        int i = low - 1;
+
+        for (int j = low; j < high; j++)
+        {
+            if (interactables[j].CurrentDistanceFromPlayer <= pivot.CurrentDistanceFromPlayer)
+            {
+                i++;
+
+                Interactable temp = interactables[i];
+                interactables[i] = interactables[j];
+                interactables[j] = temp;
+            }
+            
+        }
+        
+        Interactable temp2 = interactables[i + 1];
+        interactables[i + 1] = interactables[high];
+        interactables[high] = temp2;
+
+        return i + 1;
+
     }
 
     private void ManualHorizontal()
@@ -165,8 +210,9 @@ public class CameraControllerFollow : MonoBehaviour
         
         _strafeController.SetBool("StrifeOn",strafing);
 
-        AdjustTransparency();
+        //AdjustTransparency();
         AdjustCamera();
+        QuickSortInteractables(0,interactables.Length-1);
     }
 
     private void DetermineCameraDistanceHeightVariables()
@@ -243,16 +289,20 @@ public class CameraControllerFollow : MonoBehaviour
 
     private void AdjustTransparency()
     {
-        /*if (currentCamDistanceBack < 5)
+        if (currentCamDistanceBack < 5)
         {
             float camRatio = (currentCamDistanceBack - 1) / 4;
-            Mathf.Clamp(camRatio, 0, 1);
+            
+            if (camRatio < 0)
+                camRatio = 0;
              //playerRenderer.material.SetTexture("_Texture",); 
-            playerRenderer.material.SetFloat("_Alpha",camRatio); 
+            //playerRenderer.material.SetVector("_Alpha",new Vector4(camRatio,0,0,0)); 
         }
         else
         {
-            playerRenderer.material.SetFloat("_Alpha",1); 
-        }*/
+            //playerRenderer.material.SetVector("_Alpha",new Vector4(1,0,0,0));  
+        }
     }
+
+    public GameObject Player => player;
 }

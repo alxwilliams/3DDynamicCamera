@@ -11,6 +11,7 @@
           <e p="CameraControllerFollow.cs" t="Include" />
           <e p="CameraControllerStationary.cs" t="Include" />
           <e p="CharacterController.cs" t="Include" />
+          <e p="Interactable.cs" t="Include" />
           <e p="ToonLight.cs" t="Include" />
         </e>
       </e>
