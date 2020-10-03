@@ -20,6 +20,7 @@ public class CharacterController : MonoBehaviour
     private float _xDirection = 0;
 
     private Vector3 lastSpot;
+    private CameraControllerFollow camScript;
     
     public static class AxisInput {
         public const string LEFT_HORIZONTAL = "Horizontal";
@@ -119,10 +120,24 @@ public class CharacterController : MonoBehaviour
         
         if(_xDirection != 0 || _zDirection !=0)
         {
-            if(Input.GetAxis(AxisInput.LEFT_TRIGGER) == 0) //make player face target if player here instead of no turning
+            if (Input.GetAxis(AxisInput.LEFT_TRIGGER) == 0)
+            {
+                //make player face target if player here instead of no turning
                 transform.rotation = Quaternion.LookRotation(movement); //will have to start strafe animation here
+            }
         }
+        
+        if (camScript.LockedTarget.IsLockedOn)
+        {
+            transform.LookAt( new Vector3(camScript.LockedTarget.transform.position.x,transform.position.y,camScript.LockedTarget.transform.position.z));
+        }
+        
         transform.position += movement;
+    }
+
+    void Start()
+    {
+        camScript = cam.GetComponent<CameraControllerFollow>();
     }
 
 }

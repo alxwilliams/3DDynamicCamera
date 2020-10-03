@@ -4,17 +4,34 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
-    [SerializeField] private float _minInteractDistance;
+    [SerializeField] private float _minInteractDistance = 10;
+    [SerializeField] private float _lockedTargetExitDistance = 15;
+    [SerializeField] private float _yOffset = 5f;
 
     private GameObject player;
     private CameraControllerFollow camera;
 
+    private bool isLockedOn = false;
     private float currentDistanceFromPlayer = 10000;
     private bool closeEnough = false;
     private bool addedToList = false;
+
+    public static class AxisInput {
+        public const string LEFT_TRIGGER = "LTrigger";
+    }
     
-    public bool CloseEnough => closeEnough; 
+    public bool IsLockedOn
+    {
+        get => isLockedOn;
+        set => isLockedOn = value;
+    }
+
+    public bool CloseEnough => closeEnough;
+
+    public float YOffset => _yOffset;
+
     public float CurrentDistanceFromPlayer => currentDistanceFromPlayer;
+    
 
     public bool AddedToList
     {
@@ -46,7 +63,12 @@ public class Interactable : MonoBehaviour
             addedToList = false;
             closeEnough = false;
         }
-        
+
+        if (isLockedOn && (Input.GetAxis(AxisInput.LEFT_TRIGGER) == 0 || currentDistanceFromPlayer > _lockedTargetExitDistance))
+        {
+            isLockedOn = false;
+        }
+
     }
     
 }
