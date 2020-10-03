@@ -20,6 +20,8 @@ public class CameraControllerFollow : MonoBehaviour
     [SerializeField] private float _manualZoomOutHeight = 15;
     [SerializeField] private float _manualZoomInHeight = 2;
 
+    [SerializeField] private float _zoomBackSpeed = 10f;
+
     [SerializeField] private float _autoZoomingSpeed = 4;
     [SerializeField] private float _autoZoomOutDistance = 12;
     [SerializeField] private float _autoZoomInDistance = 8;
@@ -93,64 +95,6 @@ public class CameraControllerFollow : MonoBehaviour
         ManualVertical();
     }
 
-    private void FollowPlayerVertical()
-    {
-        if(Input.GetAxis(AxisInput.LEFT_VERTICAL) != 0)
-        {
-            if (!lockedTarget.IsLockedOn)
-            {
-                currentCamDistanceBack += Input.GetAxis(AxisInput.LEFT_VERTICAL) * Time.deltaTime * _autoZoomingSpeed *
-                                          autoDistanceScaledIncrement *
-                                          (lockedTarget.IsLockedOn
-                                              ? 2
-                                              : 1
-                                          ); //make this be the distance from the player instead of move with the joystick
-            }
-
-            currentCamHeight -= Input.GetAxis(AxisInput.LEFT_VERTICAL) * Time.deltaTime * _autoZoomingSpeed * autoHeightScaledIncrement *
-                                (lockedTarget.IsLockedOn ? 2 : 1);
-
-            if (currentCamHeight < _autoZoomInHeight)
-                currentCamHeight += Time.deltaTime * (_autoZoomInHeight - currentCamHeight);
-            else if (currentCamHeight > _autoZoomOutHeight)
-                currentCamHeight -= Time.deltaTime * (currentCamHeight - _autoZoomOutHeight);
-            
-            if (lockedTarget.IsLockedOn)
-            {
-                if (currentCamDistanceBack < lockedTarget.CurrentDistanceFromPlayer)
-                {
-                    currentCamDistanceBack +=
-                        Time.deltaTime * (lockedTarget.CurrentDistanceFromPlayer - currentCamDistanceBack);
-                }else if (currentCamDistanceBack > lockedTarget.CurrentDistanceFromPlayer)
-                {
-                    currentCamDistanceBack -=
-                        Time.deltaTime * (currentCamDistanceBack - lockedTarget.CurrentDistanceFromPlayer);
-                }
-            }
-            else
-            {
-                if (currentCamDistanceBack < _autoZoomInDistance)
-                {
-                    currentCamDistanceBack +=
-                        Time.deltaTime * (_autoZoomInDistance - currentCamDistanceBack);
-                }else if (currentCamDistanceBack > _autoZoomOutDistance)
-                {
-                    currentCamDistanceBack -=
-                        Time.deltaTime * (currentCamDistanceBack - _autoZoomOutDistance);
-                }
-            }
-        }
-    }
-
-    private void FollowPlayerHorizontal()
-    {
-        if (Input.GetAxis(AxisInput.LEFT_HORIZONTAL) != 0)
-        {
-            currentAngleDegrees -= Input.GetAxis(AxisInput.LEFT_HORIZONTAL) * Time.deltaTime * _camerAutoTurnSpeed;
-            currentAngleVectorFromplayer = new Vector3(Mathf.Cos(currentAngleDegrees * Mathf.PI / 180), 0, Mathf.Sin(currentAngleDegrees * Mathf.PI / 180));
-        }
-    }
-
     public void AddInteractableToList(Interactable obj)
     {
         interactables[interactables.Length - 1].AddedToList = false;
@@ -201,7 +145,64 @@ public class CameraControllerFollow : MonoBehaviour
         return i + 1;
 
     }
+    private void FollowPlayerVertical()
+    {
+        if(Input.GetAxis(AxisInput.LEFT_VERTICAL) != 0)
+        {
+            if (!lockedTarget.IsLockedOn)
+            {
+                currentCamDistanceBack += Input.GetAxis(AxisInput.LEFT_VERTICAL) * Time.deltaTime * _autoZoomingSpeed *
+                                          autoDistanceScaledIncrement *
+                                          (lockedTarget.IsLockedOn
+                                              ? 2
+                                              : 1
+                                          ); //make this be the distance from the player instead of move with the joystick
+            }
 
+            currentCamHeight -= Input.GetAxis(AxisInput.LEFT_VERTICAL) * Time.deltaTime * _autoZoomingSpeed * autoHeightScaledIncrement *
+                                (lockedTarget.IsLockedOn ? 2 : 1);
+        }
+        
+        if (currentCamHeight < _autoZoomInHeight)
+            currentCamHeight += Time.deltaTime * (_autoZoomInHeight - currentCamHeight) *_zoomBackSpeed;
+        else if (currentCamHeight > _autoZoomOutHeight)
+            currentCamHeight -= Time.deltaTime * (currentCamHeight - _autoZoomOutHeight) *_zoomBackSpeed;
+            
+        if (lockedTarget.IsLockedOn)
+        {
+            if (currentCamDistanceBack < lockedTarget.CurrentDistanceFromPlayer)
+            {
+                currentCamDistanceBack +=
+                    Time.deltaTime * (lockedTarget.CurrentDistanceFromPlayer - currentCamDistanceBack) *_zoomBackSpeed;
+            }else if (currentCamDistanceBack > lockedTarget.CurrentDistanceFromPlayer)
+            {
+                currentCamDistanceBack -=
+                    Time.deltaTime * (currentCamDistanceBack - lockedTarget.CurrentDistanceFromPlayer) *_zoomBackSpeed;
+            }
+        }
+        else
+        {
+            if (currentCamDistanceBack < _autoZoomInDistance)
+            {
+                currentCamDistanceBack +=
+                    Time.deltaTime * (_autoZoomInDistance - currentCamDistanceBack) *_zoomBackSpeed;
+            }else if (currentCamDistanceBack > _autoZoomOutDistance)
+            {
+                currentCamDistanceBack -=
+                    Time.deltaTime * (currentCamDistanceBack - _autoZoomOutDistance) *_zoomBackSpeed;
+            }
+        }
+    }
+
+    private void FollowPlayerHorizontal()
+    {
+        if (Input.GetAxis(AxisInput.LEFT_HORIZONTAL) != 0)
+        {
+            currentAngleDegrees -= Input.GetAxis(AxisInput.LEFT_HORIZONTAL) * Time.deltaTime * _camerAutoTurnSpeed;
+            currentAngleVectorFromplayer = new Vector3(Mathf.Cos(currentAngleDegrees * Mathf.PI / 180), 0, Mathf.Sin(currentAngleDegrees * Mathf.PI / 180));
+        }
+    }
+    
     private void ManualHorizontal()
     {
         if (Input.GetAxis(AxisInput.RIGHT_HORIZONTAL) != 0)
@@ -215,12 +216,32 @@ public class CameraControllerFollow : MonoBehaviour
     {
         if (Input.GetAxis(AxisInput.RIGHT_VERTICAL) != 0)
         {
-            currentCamDistanceBack -= Input.GetAxis(AxisInput.RIGHT_VERTICAL) * Time.deltaTime * _manualZoomingSpeed *manualDistanceScaledIncrement;
-            currentCamHeight -= Input.GetAxis(AxisInput.RIGHT_VERTICAL) * Time.deltaTime * _manualZoomingSpeed * manualHeightScaledIncrement;
+            float minClamp = -1;
+            float maxClamp = 1;
+            if (currentCamDistanceBack <= _manualZoomInDistance)
+                maxClamp = 0;
+            if (currentCamDistanceBack >= _manualZoomOutDistance)
+                minClamp = 0;
             
-            currentCamHeight = Mathf.Clamp(currentCamHeight, _manualZoomInHeight, _manualZoomOutHeight);
-            currentCamDistanceBack = Mathf.Clamp(currentCamDistanceBack,_manualZoomInDistance, _manualZoomOutDistance);
+            currentCamDistanceBack -= Mathf.Clamp(Input.GetAxis(AxisInput.RIGHT_VERTICAL),minClamp,maxClamp) * Time.deltaTime * _manualZoomingSpeed *manualDistanceScaledIncrement;
+            /*if(currentCamHeight <= _manualZoomOutHeight && currentCamHeight >= _manualZoomInHeight)
+                currentCamHeight -= Input.GetAxis(AxisInput.RIGHT_VERTICAL) * Time.deltaTime * _manualZoomingSpeed * manualHeightScaledIncrement;*/
         }
+        
+        /*if (currentCamHeight < _manualZoomInHeight)
+            currentCamHeight += Time.deltaTime * (_manualZoomInHeight - currentCamHeight) *_zoomBackSpeed;
+        else if (currentCamHeight > _manualZoomOutHeight)
+            currentCamHeight -= Time.deltaTime * (currentCamHeight - _manualZoomOutHeight) *_zoomBackSpeed;*/
+            
+        if (currentCamDistanceBack < _manualZoomInDistance)
+            currentCamDistanceBack += Time.deltaTime * (_manualZoomInDistance - currentCamDistanceBack) *_zoomBackSpeed;
+        else if (currentCamDistanceBack > _manualZoomOutDistance)
+            currentCamDistanceBack -= Time.deltaTime * (currentCamDistanceBack - _manualZoomOutDistance) *_zoomBackSpeed;
+        
+        
+        float camHeightDiff = _manualZoomOutHeight - _manualZoomInHeight;
+        float camDistanceDiff = _manualZoomOutDistance - _manualZoomInDistance;
+        currentCamHeight = (currentCamDistanceBack - _autoZoomInDistance) / camDistanceDiff * camHeightDiff + _autoZoomInHeight;
     }
     
     private void Update()
@@ -359,7 +380,7 @@ public class CameraControllerFollow : MonoBehaviour
                 endingAngle += 360;
             
             currentAngleDegrees = Mathf.Lerp(startingAngle, endingAngle, t / _strafeLookAroundTime);
-            currentAngleVectorFromplayer = new Vector3(Mathf.Cos(currentAngleDegrees * Mathf.PI / 180), 0, Mathf.Sin(currentAngleDegrees * Mathf.PI / 180));
+            currentAngleVectorFromplayer = new Vector3(Mathf.Cos(currentAngleDegrees * Mathf.PI / 180), 0, Mathf.Sin(currentAngleDegrees * Mathf.PI / 180)); // I think I gotta mess with stuff in here
 
             currentCamDistanceBack = Mathf.Lerp(startingDistanceBack, distanceBack, t / _strafeLookAroundTime);
             
@@ -395,9 +416,15 @@ public class CameraControllerFollow : MonoBehaviour
     {
         transform.position = player.transform.position + currentCamDistanceBack * currentAngleVectorFromplayer + new Vector3(0,currentCamHeight,0);
 
-        //currentLookAtPosition += (currentLookAtPosition - whereToLook) * Time.deltaTime;
-        
+        /*if(spinCoroutine)
+        {
+            currentLookAtPosition -= (currentLookAtPosition - whereToLook) * Time.deltaTime;
+            transform.LookAt(currentLookAtPosition);
+        }
+        else
+        {*/
         transform.LookAt(whereToLook);
+        //}
     }
 
     private void AdjustTransparency()
