@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d739253e-328a-4bd9-8cf8-8d845577dc1e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.AGoodMask3D/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AGoodMask3D/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.AGoodMask3D/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AGoodMask3D/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs" afterDir="false" />
     </list>
@@ -92,7 +91,7 @@
       <workItem from="1600803639000" duration="6000" />
       <workItem from="1600804989431" duration="9554000" />
       <workItem from="1601311938272" duration="68919000" />
-      <workItem from="1601694925892" duration="3815000" />
+      <workItem from="1601694925892" duration="5644000" />
     </task>
     <servers />
   </component>
@@ -227,13 +226,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs</url>
-          <line>438</line>
+          <line>443</line>
           <properties documentPath="$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs" initialLine="250">
             <startOffsets>
-              <option value="17432" />
+              <option value="17780" />
             </startOffsets>
             <endOffsets>
-              <option value="17504" />
+              <option value="17852" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="15" />
@@ -253,13 +252,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs</url>
-          <line>416</line>
+          <line>421</line>
           <properties documentPath="$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs" initialLine="403">
             <startOffsets>
-              <option value="16705" />
+              <option value="17053" />
             </startOffsets>
             <endOffsets>
-              <option value="16844" />
+              <option value="17192" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="24" />

@@ -376,8 +376,13 @@ public class CameraControllerFollow : MonoBehaviour
         for(float t = 0; t< _strafeLookAroundTime; t += Time.deltaTime)
         {
             endingAngle = Mathf.Atan2((-player.transform.forward).z,(-player.transform.forward).x) * 180 / Mathf.PI;
-            if (startingAngle >= 180)
+            Debug.Log($"Starting: {startingAngle}, ending: {endingAngle}");
+            if ((endingAngle-startingAngle) < -180) //we're adjusting the ending angle to compensate for the angle only being in the range 0-360
                 endingAngle += 360;
+            else if ((endingAngle - startingAngle > 180))
+                endingAngle -= 360;
+            
+            Debug.Log($"new ending angle:{endingAngle}");
             
             currentAngleDegrees = Mathf.Lerp(startingAngle, endingAngle, t / _strafeLookAroundTime);
             currentAngleVectorFromplayer = new Vector3(Mathf.Cos(currentAngleDegrees * Mathf.PI / 180), 0, Mathf.Sin(currentAngleDegrees * Mathf.PI / 180)); // I think I gotta mess with stuff in here
