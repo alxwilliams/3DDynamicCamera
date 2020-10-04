@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,7 +30,10 @@ public class CameraControllerFollow : MonoBehaviour
     [SerializeField] private float _autoZoomInHeight = 6;
 
     [SerializeField] private Animator _strafeController;
-    [SerializeField] private float _strafeLookAroundTime = 1;
+    [SerializeField] private float _spinAroundTime = 0.3f;
+    [SerializeField] private float _targetStrafeLookAroundTime = 1.3f;
+
+    [SerializeField] private float _lookAtAngleChangeTime = 1.5f;
 
     [SerializeField] private Image _targetArrowImage;
     [SerializeField] private RectTransform _targetArrowTransform;
@@ -50,16 +54,21 @@ public class CameraControllerFollow : MonoBehaviour
     private float currentCamDistanceBack;
 
     private bool onFollow = true;
-    private bool spinCoroutine = false;
+    private bool strafeSpinCoroutine = false;
+    private bool spinBackCoroutine = false;
     private bool strafing = false;
 
     private bool hasTarget = false;
+    private bool facingPlayer = true;
+    private bool angleChanging = false;
     
     
     private Interactable[] interactables = new Interactable[6] {new Interactable(), new Interactable(), new Interactable(), new Interactable(), new Interactable(), new Interactable()};
     private Interactable lockedTarget = new Interactable();
 
     public Interactable LockedTarget => lockedTarget;
+
+    public bool StrafeSpinCoroutine => strafeSpinCoroutine;
 
 
     public static class AxisInput {
@@ -120,7 +129,6 @@ public class CameraControllerFollow : MonoBehaviour
         for (int j = low; j < high; j++)
         {
 
-
             if (!interactables[j].CloseEnough)
             {
                 interactables[j].AddedToList = false;
@@ -147,7 +155,7 @@ public class CameraControllerFollow : MonoBehaviour
     }
     private void FollowPlayerVertical()
     {
-        if(Input.GetAxis(AxisInput.LEFT_VERTICAL) != 0)
+        if(Input.GetAxis(AxisInput.LEFT_VERTICAL) != 0 && !angleChanging && !strafeSpinCoroutine && !spinBackCoroutine)
         {
             if (!lockedTarget.IsLockedOn)
             {
@@ -168,16 +176,16 @@ public class CameraControllerFollow : MonoBehaviour
         else if (currentCamHeight > _autoZoomOutHeight)
             currentCamHeight -= Time.deltaTime * (currentCamHeight - _autoZoomOutHeight) *_zoomBackSpeed;
             
-        if (lockedTarget.IsLockedOn)
+        if (lockedTarget.IsLockedOn) //if strafing with target
         {
-            if (currentCamDistanceBack < lockedTarget.CurrentDistanceFromPlayer)
+            if (currentCamDistanceBack < _autoZoomInDistance)
             {
                 currentCamDistanceBack +=
-                    Time.deltaTime * (lockedTarget.CurrentDistanceFromPlayer - currentCamDistanceBack) *_zoomBackSpeed;
+                    Time.deltaTime * (_autoZoomInDistance - currentCamDistanceBack) *_zoomBackSpeed/5;
             }else if (currentCamDistanceBack > lockedTarget.CurrentDistanceFromPlayer)
             {
                 currentCamDistanceBack -=
-                    Time.deltaTime * (currentCamDistanceBack - lockedTarget.CurrentDistanceFromPlayer) *_zoomBackSpeed;
+                    Time.deltaTime * (currentCamDistanceBack - lockedTarget.CurrentDistanceFromPlayer) *_zoomBackSpeed/5;
             }
         }
         else
@@ -196,7 +204,7 @@ public class CameraControllerFollow : MonoBehaviour
 
     private void FollowPlayerHorizontal()
     {
-        if (Input.GetAxis(AxisInput.LEFT_HORIZONTAL) != 0)
+        if (Input.GetAxis(AxisInput.LEFT_HORIZONTAL) != 0 && !angleChanging && !strafeSpinCoroutine && !spinBackCoroutine)
         {
             currentAngleDegrees -= Input.GetAxis(AxisInput.LEFT_HORIZONTAL) * Time.deltaTime * _camerAutoTurnSpeed;
             currentAngleVectorFromplayer = new Vector3(Mathf.Cos(currentAngleDegrees * Mathf.PI / 180), 0, Mathf.Sin(currentAngleDegrees * Mathf.PI / 180));
@@ -205,7 +213,7 @@ public class CameraControllerFollow : MonoBehaviour
     
     private void ManualHorizontal()
     {
-        if (Input.GetAxis(AxisInput.RIGHT_HORIZONTAL) != 0)
+        if (Input.GetAxis(AxisInput.RIGHT_HORIZONTAL) != 0 && !angleChanging && !strafeSpinCoroutine && !spinBackCoroutine)
         {
             currentAngleDegrees -= Input.GetAxis(AxisInput.RIGHT_HORIZONTAL) * Time.deltaTime * _cameraManualTurnSpeed;
             currentAngleVectorFromplayer = new Vector3(Mathf.Cos(currentAngleDegrees * Mathf.PI / 180), 0, Mathf.Sin(currentAngleDegrees * Mathf.PI / 180));
@@ -214,7 +222,7 @@ public class CameraControllerFollow : MonoBehaviour
 
     private void ManualVertical()
     {
-        if (Input.GetAxis(AxisInput.RIGHT_VERTICAL) != 0)
+        if (Input.GetAxis(AxisInput.RIGHT_VERTICAL) != 0 && !angleChanging && !strafeSpinCoroutine && !spinBackCoroutine)
         {
             float minClamp = -1;
             float maxClamp = 1;
@@ -247,13 +255,6 @@ public class CameraControllerFollow : MonoBehaviour
     private void Update()
     {
 
-        if (lockedTarget.IsLockedOn == false && hasTarget == true)
-        {
-            hasTarget = false;
-            spinCoroutine = true;
-            StartCoroutine(SpinToBack(true, currentCamDistanceBack));
-        }
-
         if(Input.GetAxis(AxisInput.LEFT_TRIGGER) != 0)
         {
 
@@ -265,12 +266,12 @@ public class CameraControllerFollow : MonoBehaviour
                     lockedTarget.IsLockedOn = true;
                     hasTarget = true;
                 }
-                spinCoroutine = true;
+                strafeSpinCoroutine = true;
                 StartCoroutine(SpinToBack(true,_camStartingDistanceBack));
                 onFollow = true;
             }
             
-            if(!spinCoroutine)
+            if(!strafeSpinCoroutine)
             {
                 ManualHorizontal();
                 if(onFollow)
@@ -283,6 +284,7 @@ public class CameraControllerFollow : MonoBehaviour
         }
         else
         {
+
             strafing = false;
             if(onFollow)
             {
@@ -296,20 +298,67 @@ public class CameraControllerFollow : MonoBehaviour
                 onFollow = false;
         }
         
+        _strafeController.SetBool("StrifeOn",(strafing || strafeSpinCoroutine));
+        
+        if (lockedTarget.IsLockedOn == false && hasTarget && (!strafeSpinCoroutine || !spinBackCoroutine))
+        {
+            hasTarget = false;
+            spinBackCoroutine = true;
+            StartCoroutine(SpinToBack(true, currentCamDistanceBack));
+        }
+        
         if (Input.GetAxis(AxisInput.RIGHT_VERTICAL) != 0)
             onFollow = false;
-        
-        _strafeController.SetBool("StrifeOn",strafing);
 
-        //AdjustTransparency();
-        
-        if(lockedTarget.IsLockedOn)
-            AdjustCamera((player.transform.position + new Vector3(0, _midBodyLookHeight, 0) +
-                          lockedTarget.transform.position + new Vector3(0, lockedTarget.YOffset, 0))/2); //average between player position and locked on target
-        else
+        /*if(lockedTarget.IsLockedOn)
         {
-            AdjustCamera(player.transform.position + new Vector3(0,_midBodyLookHeight,0));
+            if (facingPlayer)
+            {
+                angleChanging = true;
+                StartCoroutine(ChangeCameraLookAtAngle(player.transform.position + new Vector3(0, _midBodyLookHeight, 0)
+                    , (player.transform.position + new Vector3(0, _midBodyLookHeight, 0) +
+                       lockedTarget.transform.position + new Vector3(0, lockedTarget.YOffset, 0)) / 2));
+                facingPlayer = false;
+            }
+            else if (!angleChanging)
+            {
+                AdjustCamera((player.transform.position + new Vector3(0, _midBodyLookHeight, 0) +
+                              lockedTarget.transform.position + new Vector3(0, lockedTarget.YOffset, 0)) /
+                             2); //average between player position and locked on target}
+            }
+        }else
+        {
+            if(!facingPlayer)
+            {
+
+                angleChanging = true;
+                StartCoroutine(ChangeCameraLookAtAngle((player.transform.position + new Vector3(0, _midBodyLookHeight, 0) +
+                                                        lockedTarget.transform.position + new Vector3(0, lockedTarget.YOffset, 0)) / 2,player.transform.position + new Vector3(0, _midBodyLookHeight, 0)));
+                facingPlayer = true;
+            }
+            else if(!angleChanging)
+            {*/
+                AdjustCamera(player.transform.position + new Vector3(0,_midBodyLookHeight,0));
+            /*}
+            
+        }*/
+
+        MoveAndArrangeTargetArrows();
+    }
+
+    IEnumerator ChangeCameraLookAtAngle(Vector3 starting, Vector3 ending)
+    {
+        for (float t = 0; t <= _lookAtAngleChangeTime; t += Time.deltaTime)
+        {
+            Vector3 newAngleVector = starting + (ending - starting) * t / _lookAtAngleChangeTime;
+            AdjustCamera(newAngleVector);
+            yield return null;
         }
+        angleChanging = false;
+    }
+
+    private void MoveAndArrangeTargetArrows()
+    {
         QuickSortInteractables(0,interactables.Length-1);
 
         if (lockedTarget.IsLockedOn)
@@ -370,13 +419,21 @@ public class CameraControllerFollow : MonoBehaviour
         float endingAngle;
         float startingDistanceBack = currentCamDistanceBack;
         float startingCamHeight = currentCamHeight;
-
+        float spinTime;
+            
+        endingAngle = Mathf.Atan2((-player.transform.forward).z,(-player.transform.forward).x) * 180 / Mathf.PI;
         
-
-        for(float t = 0; t< _strafeLookAroundTime; t += Time.deltaTime)
+        if(lockedTarget.IsLockedOn)
         {
-            endingAngle = Mathf.Atan2((-player.transform.forward).z,(-player.transform.forward).x) * 180 / Mathf.PI;
-            Debug.Log($"Starting: {startingAngle}, ending: {endingAngle}");
+            spinTime = _targetStrafeLookAroundTime;
+        }
+        else
+        {
+            spinTime = _spinAroundTime;
+        }
+        for(float t = 0; t< spinTime; t += Time.deltaTime)
+        {
+            
             if ((endingAngle-startingAngle) < -180) //we're adjusting the ending angle to compensate for the angle only being in the range 0-360
                 endingAngle += 360;
             else if ((endingAngle - startingAngle > 180))
@@ -384,10 +441,10 @@ public class CameraControllerFollow : MonoBehaviour
             
             Debug.Log($"new ending angle:{endingAngle}");
             
-            currentAngleDegrees = Mathf.Lerp(startingAngle, endingAngle, t / _strafeLookAroundTime);
+            currentAngleDegrees = Mathf.Lerp(startingAngle, endingAngle, t / spinTime);
             currentAngleVectorFromplayer = new Vector3(Mathf.Cos(currentAngleDegrees * Mathf.PI / 180), 0, Mathf.Sin(currentAngleDegrees * Mathf.PI / 180)); // I think I gotta mess with stuff in here
 
-            currentCamDistanceBack = Mathf.Lerp(startingDistanceBack, distanceBack, t / _strafeLookAroundTime);
+            currentCamDistanceBack = Mathf.Lerp(startingDistanceBack, distanceBack, t / spinTime);
             
             if(auto)
             {
@@ -397,7 +454,7 @@ public class CameraControllerFollow : MonoBehaviour
                     (_autoZoomOutHeight - _autoZoomInHeight) +
                     _autoZoomInHeight, //this mess of a function, this second variable is the same at the end of DetermineCameraDistanceHeightVariables() it's just got it's variables not condensed and it's the manual form
                     
-                    t / _strafeLookAroundTime);
+                    t / spinTime);
             }
             else
             {
@@ -407,13 +464,14 @@ public class CameraControllerFollow : MonoBehaviour
                     (_manualZoomOutHeight - _manualZoomInHeight) +
                     _manualZoomInHeight, //this mess of a function, this second variable is the same at the end of DetermineCameraDistanceHeightVariables() it's just got it's variables not condensed and it's the manual form
                     
-                    t / _strafeLookAroundTime);
+                    t / spinTime);
             }
             
             yield return null;
         }
 
-        spinCoroutine = false;
+        strafeSpinCoroutine = false;
+        spinBackCoroutine = false;
     }
     
     // Update is called once per frame

@@ -64,7 +64,7 @@ public class Interactable : MonoBehaviour
             closeEnough = false;
         }
 
-        if (isLockedOn && (Input.GetAxis(AxisInput.LEFT_TRIGGER) == 0 || currentDistanceFromPlayer > _lockedTargetExitDistance))
+        if (!camera.StrafeSpinCoroutine && isLockedOn && (Input.GetAxis(AxisInput.LEFT_TRIGGER) == 0 || currentDistanceFromPlayer > _lockedTargetExitDistance))
         {
             isLockedOn = false;
         }

@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="d739253e-328a-4bd9-8cf8-8d845577dc1e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.AGoodMask3D/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AGoodMask3D/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Interactable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Interactable.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,8 +32,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Assets/Scripts/ToonLight.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Interactable.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/CharacterController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Interactable.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs" />
       </list>
     </option>
@@ -91,7 +93,7 @@
       <workItem from="1600803639000" duration="6000" />
       <workItem from="1600804989431" duration="9554000" />
       <workItem from="1601311938272" duration="68919000" />
-      <workItem from="1601694925892" duration="5644000" />
+      <workItem from="1601694925892" duration="15087000" />
     </task>
     <servers />
   </component>
@@ -185,10 +187,14 @@
     </state>
     <state width="2144" height="347" key="GridCell.Tab.3.right/0.0.2560.1400/3840.489.1920.1040@0.0.2560.1400" timestamp="1601695266398" />
     <state width="1877" height="347" key="GridCell.Tab.3.right/0.0.2560.1400/3840.489.1920.1040@3840.489.1920.1040" timestamp="1601587958250" />
-    <state x="1009" y="469" width="644" height="526" key="find.popup" timestamp="1601687126517">
+    <state x="1009" y="469" width="644" height="526" key="find.popup" timestamp="1601751447233">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="1009" y="469" width="644" height="526" key="find.popup/0.0.2560.1400/3840.489.1920.1040@0.0.2560.1400" timestamp="1601687126517" />
+    <state x="1009" y="469" width="644" height="526" key="find.popup/0.0.2560.1400/3840.489.1920.1040@0.0.2560.1400" timestamp="1601751447233" />
+    <state x="988" y="349" key="run.anything.popup" timestamp="1601751217692">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="988" y="349" key="run.anything.popup/0.0.2560.1400/3840.489.1920.1040@0.0.2560.1400" timestamp="1601751217692" />
     <state x="831" y="303" width="896" height="913" key="search.everywhere.popup" timestamp="1601686698036">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -226,39 +232,26 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs</url>
-          <line>443</line>
+          <line>501</line>
           <properties documentPath="$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs" initialLine="250">
             <startOffsets>
-              <option value="17780" />
+              <option value="20164" />
             </startOffsets>
             <endOffsets>
-              <option value="17852" />
+              <option value="20236" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="15" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs</url>
-          <line>306</line>
-          <properties documentPath="$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs" initialLine="293">
-            <startOffsets>
-              <option value="11595" />
-            </startOffsets>
-            <endOffsets>
-              <option value="11836" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="22" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs</url>
-          <line>421</line>
+          <line>479</line>
           <properties documentPath="$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs" initialLine="403">
             <startOffsets>
-              <option value="17053" />
+              <option value="19437" />
             </startOffsets>
             <endOffsets>
-              <option value="17192" />
+              <option value="19576" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="24" />

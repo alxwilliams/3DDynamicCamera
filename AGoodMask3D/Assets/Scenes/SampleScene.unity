@@ -412,7 +412,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 2.57301e-40, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 5.0351e-41, z: 0, w: -0.0000000028667273}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -654,7 +654,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 2.54425e-40, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 5.0553e-41, z: 0, w: -0.0000000031286618}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -1177,16 +1177,19 @@ MonoBehaviour:
   _camerAutoTurnSpeed: 155
   _manualZoomingSpeed: 10
   _manualZoomOutDistance: 22
-  _manualZoomInDistance: 0
+  _manualZoomInDistance: 6
   _manualZoomOutHeight: 15
   _manualZoomInHeight: 1
+  _zoomBackSpeed: 20
   _autoZoomingSpeed: 2
   _autoZoomOutDistance: 14
   _autoZoomInDistance: 9
   _autoZoomOutHeight: 7
   _autoZoomInHeight: 5
   _strafeController: {fileID: 469273828}
-  _strafeLookAroundTime: 0.3
+  _spinAroundTime: 0.3
+  _targetStrafeLookAroundTime: 0.6
+  _lookAtAngleChangeTime: 0.01
   _targetArrowImage: {fileID: 813656447}
   _targetArrowTransform: {fileID: 455134996}
   _passiveTargetSprite: {fileID: 21300000, guid: c82546641f9919543a5c882791e411d8,
@@ -1444,7 +1447,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 2.60395e-40, z: 0, w: 6.3698913e+19}
+  m_BoundingSphereOverride: {x: 0, y: 4.7986e-41, z: 0, w: -0.0000000031286618}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
