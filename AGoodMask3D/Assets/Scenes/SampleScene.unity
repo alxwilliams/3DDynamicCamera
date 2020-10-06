@@ -412,7 +412,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 4.001e-41, z: 0, w: 10.125}
+  m_BoundingSphereOverride: {x: 0, y: 1.06695e-40, z: 0, w: 6.8797933e+34}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -550,7 +550,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _minInteractDistance: 15
-  _lockedTargetExitDistance: 40
+  _lockedTargetExitDistance: 35
   _yOffset: 1.5
 --- !u!1 &764913317
 GameObject:
@@ -654,7 +654,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 3.3738e-41, z: 0, w: 15.6875}
+  m_BoundingSphereOverride: {x: 0, y: 2.5e-44, z: 1.2302e-41, w: 5.9e-44}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -1187,7 +1187,7 @@ MonoBehaviour:
   _autoZoomOutHeight: 7
   _autoZoomInHeight: 5
   _strafeController: {fileID: 469273828}
-  _spinAroundTime: 0.3
+  _spinAroundTime: 0.19
   _targetStrafeLookAroundTime: 0.6
   _lookAtAngleChangeTime: 0.01
   _targetArrowImage: {fileID: 813656447}
@@ -1302,7 +1302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _minInteractDistance: 15
-  _lockedTargetExitDistance: 40
+  _lockedTargetExitDistance: 35
   _yOffset: 1.5
 --- !u!1 &1242741667 stripped
 GameObject:
@@ -1447,7 +1447,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 3.5436e-41, z: 0, w: 11.5625}
+  m_BoundingSphereOverride: {x: 0, y: 1.10075e-40, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -1613,7 +1613,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1929797545}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -21.452374, y: 0, z: 8.2575}
+  m_LocalPosition: {x: -23.92, y: 1.23, z: 6.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1632,5 +1632,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _minInteractDistance: 15
-  _lockedTargetExitDistance: 40
+  _lockedTargetExitDistance: 35
   _yOffset: 1.5

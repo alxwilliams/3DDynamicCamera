@@ -108,30 +108,40 @@ public class CameraControllerFollow : MonoBehaviour
     
     private void FollowPlayerVertical()
     {
-        if(Input.GetAxis(AxisInput.LEFT_VERTICAL) != 0 && !angleChanging && !strafeSpinCoroutine && !spinBackCoroutine)
+        if (lockedTarget.IsLockedOn) 
+        {
+            float heightDifference = ((lockedTarget.transform.position.y +lockedTarget.YOffset)- (player.transform.position.y + _midBodyLookHeight));
+            float flatDifference =
+                Mathf.Sqrt(lockedTarget.CurrentDistanceFromPlayer * lockedTarget.CurrentDistanceFromPlayer -
+                           heightDifference * heightDifference);
+
+            if (float.IsNaN(flatDifference))
+                flatDifference = 0;
+
+            float endDistance = flatDifference / 6 + _midBodyLookHeight * 2;
+            float endHeight = _midBodyLookHeight*6/8;
+            
+            currentCamDistanceBack += (endDistance - currentCamDistanceBack) * Time.deltaTime;
+            currentCamHeight += (endHeight - currentCamHeight) * Time.deltaTime;
+            
+            /*currentCamDistanceBack = flatDifference/6 + _midBodyLookHeight*2;
+            currentCamHeight = _midBodyLookHeight*6/8;*/
+        }
+        else if(Input.GetAxis(AxisInput.LEFT_VERTICAL) != 0 && !angleChanging && !strafeSpinCoroutine && !spinBackCoroutine)
         {
             if (!lockedTarget.IsLockedOn)
             {
                 currentCamDistanceBack += Input.GetAxis(AxisInput.LEFT_VERTICAL) * Time.deltaTime * _autoZoomingSpeed *
-                                          autoDistanceScaledIncrement *
-                                          (lockedTarget.IsLockedOn
-                                              ? 2
-                                              : 1
-                                          ); //make this be the distance from the player instead of move with the joystick
+                                          autoDistanceScaledIncrement;
+                
+                currentCamHeight -= Input.GetAxis(AxisInput.LEFT_VERTICAL) * Time.deltaTime * _autoZoomingSpeed * autoHeightScaledIncrement *
+                                    (lockedTarget.IsLockedOn ? 2 : 1);
             }
-
-            currentCamHeight -= Input.GetAxis(AxisInput.LEFT_VERTICAL) * Time.deltaTime * _autoZoomingSpeed * autoHeightScaledIncrement *
-                                (lockedTarget.IsLockedOn ? 2 : 1);
         }
-        
-        if (currentCamHeight < _autoZoomInHeight)
-            currentCamHeight += Time.deltaTime * (_autoZoomInHeight - currentCamHeight) *_zoomBackSpeed;
-        else if (currentCamHeight > _autoZoomOutHeight)
-            currentCamHeight -= Time.deltaTime * (currentCamHeight - _autoZoomOutHeight) *_zoomBackSpeed;
-            
+
         if (lockedTarget.IsLockedOn) //if strafing with target
         {
-            if (currentCamDistanceBack < _autoZoomInDistance)
+            /*if (currentCamDistanceBack < _autoZoomInDistance)
             {
                 currentCamDistanceBack +=
                     Time.deltaTime * (_autoZoomInDistance - currentCamDistanceBack) *_zoomBackSpeed/5;
@@ -139,10 +149,15 @@ public class CameraControllerFollow : MonoBehaviour
             {
                 currentCamDistanceBack -=
                     Time.deltaTime * (currentCamDistanceBack - lockedTarget.CurrentDistanceFromPlayer) *_zoomBackSpeed/5;
-            }
+            }*/
         }
         else
         {
+            if (currentCamHeight < _autoZoomInHeight)
+                currentCamHeight += Time.deltaTime * (_autoZoomInHeight - currentCamHeight) * _zoomBackSpeed;
+            else if (currentCamHeight > _autoZoomOutHeight)
+                currentCamHeight -= Time.deltaTime * (currentCamHeight - _autoZoomOutHeight) * _zoomBackSpeed;
+            
             if (currentCamDistanceBack < _autoZoomInDistance)
             {
                 currentCamDistanceBack +=
@@ -184,16 +199,11 @@ public class CameraControllerFollow : MonoBehaviour
             if (currentCamDistanceBack >= _manualZoomOutDistance)
                 minClamp = 0;
             
+            //this clamp is so it can keep taking input from the joystick when it's reached one of it's two limits being 1 and -1
             currentCamDistanceBack -= Mathf.Clamp(Input.GetAxis(AxisInput.RIGHT_VERTICAL),minClamp,maxClamp) * Time.deltaTime * _manualZoomingSpeed *manualDistanceScaledIncrement;
-            /*if(currentCamHeight <= _manualZoomOutHeight && currentCamHeight >= _manualZoomInHeight)
-                currentCamHeight -= Input.GetAxis(AxisInput.RIGHT_VERTICAL) * Time.deltaTime * _manualZoomingSpeed * manualHeightScaledIncrement;*/
-        }
-        
-        /*if (currentCamHeight < _manualZoomInHeight)
-            currentCamHeight += Time.deltaTime * (_manualZoomInHeight - currentCamHeight) *_zoomBackSpeed;
-        else if (currentCamHeight > _manualZoomOutHeight)
-            currentCamHeight -= Time.deltaTime * (currentCamHeight - _manualZoomOutHeight) *_zoomBackSpeed;*/
             
+        }
+
         if (currentCamDistanceBack < _manualZoomInDistance)
             currentCamDistanceBack += Time.deltaTime * (_manualZoomInDistance - currentCamDistanceBack) *_zoomBackSpeed;
         else if (currentCamDistanceBack > _manualZoomOutDistance)
@@ -203,6 +213,7 @@ public class CameraControllerFollow : MonoBehaviour
         float camHeightDiff = _manualZoomOutHeight - _manualZoomInHeight;
         float camDistanceDiff = _manualZoomOutDistance - _manualZoomInDistance;
         currentCamHeight = (currentCamDistanceBack - _autoZoomInDistance) / camDistanceDiff * camHeightDiff + _autoZoomInHeight;
+        
     }
 
     private void DetermineCameraDistanceHeightVariables()
@@ -248,9 +259,21 @@ public class CameraControllerFollow : MonoBehaviour
         else if ((endingAngle - currentAngle > 180))
             endingAngle -= 360;
 
-        if (endingAngle - currentAngle >= 0)
+        if (endingAngle - currentAngle >= 75) // this group of if statements gives the locked on camera boundaries (example, behind the back, should go to over the shoulder 20 degrees, behind the enemy sshould go to side view 75 degrees
+        {
+            endingAngle = endingAngle - 75;
+        }else if (endingAngle - currentAngle > 20)
+        {
+            endingAngle = currentAngle;
+        }else if (endingAngle - currentAngle >= 0)
         {
             endingAngle = endingAngle - 20;
+        }else if (endingAngle - currentAngle <= -75)
+        {
+            endingAngle = endingAngle + 75;
+        }else if (endingAngle - currentAngle < -20)
+        {
+            endingAngle = currentAngle;
         }
         else
         {
@@ -354,6 +377,8 @@ public class CameraControllerFollow : MonoBehaviour
             
             if(!strafeSpinCoroutine)
             {
+                if (Input.GetAxis(AxisInput.RIGHT_HORIZONTAL) != 0)
+                    onFollow = false;
                 
                 if (lockedTarget.IsLockedOn && onFollow)
                 {
@@ -389,17 +414,28 @@ public class CameraControllerFollow : MonoBehaviour
         
         _strafeController.SetBool("StrifeOn",(strafing || strafeSpinCoroutine));
         
-        if(lockedTarget.IsLockedOn && hasTarget && (!strafeSpinCoroutine || !spinBackCoroutine) && Input.GetAxis((AxisInput.LEFT_TRIGGER)) == 0)
+        if(lockedTarget.IsLockedOn && hasTarget && (!strafeSpinCoroutine || !spinBackCoroutine) && Input.GetAxis((AxisInput.LEFT_TRIGGER)) == 0) //when strafe button is let go, don't spin the camera back but leave target
         {
             hasTarget = false;
             lockedTarget.IsLockedOn = false;
         }
         else if (lockedTarget.CloseEnough == false && hasTarget && (!strafeSpinCoroutine || !spinBackCoroutine))
         {
-            hasTarget = false;
             lockedTarget.IsLockedOn = false;
-            spinBackCoroutine = true;
-            StartCoroutine(SpinToBack(true, currentCamDistanceBack));
+            
+            if (interactables[0].CloseEnough) //switches target to new if you walk out of range and there is a target available
+            {
+                lockedTarget = interactables[0];
+                lockedTarget.IsLockedOn = true;
+                strafeSpinCoroutine = true;
+                StartCoroutine(SpinToBack(true, currentCamDistanceBack));
+            }
+            else //else, spin to back but stay in strafe mode
+            {
+                hasTarget = false;
+                spinBackCoroutine = true;
+                StartCoroutine(SpinToBack(true, currentCamDistanceBack));
+            }
         }
         
         if (Input.GetAxis(AxisInput.RIGHT_VERTICAL) != 0)
@@ -425,7 +461,7 @@ public class CameraControllerFollow : MonoBehaviour
             if (float.IsNaN(flatDifference))
                 flatDifference = 0;
             
-            endGoal = new Vector3(player.transform.forward.x * flatDifference/2,heightDifference/2 ,player.transform.forward.z * flatDifference/2);
+            endGoal = new Vector3(player.transform.forward.x * flatDifference/2,-_midBodyLookHeight/4,player.transform.forward.z * flatDifference/2);
 
             if(lockedTargetPositionOffset != endGoal)
             {
