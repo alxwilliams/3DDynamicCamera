@@ -57,6 +57,9 @@ public class Interactable : MonoBehaviour
                 camera.AddInteractableToList(this);
                 addedToList = true;
             }
+        }else if (isLockedOn && currentDistanceFromPlayer <= _lockedTargetExitDistance)
+        {
+            //we gucci
         }
         else
         {

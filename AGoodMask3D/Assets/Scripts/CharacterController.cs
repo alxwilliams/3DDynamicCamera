@@ -90,11 +90,11 @@ public class CharacterController : MonoBehaviour
         
             //AnimationCheck();
         
-        if (_xDirection != 0 && _zDirection != 0)
+        /*if (_xDirection != 0 && _zDirection != 0)
         {
             _xDirection = _xDirection * Mathf.Acos(45 * Mathf.PI/180);
             _zDirection = _zDirection * Mathf.Acos(45 * Mathf.PI/180);
-        }
+        }*/
 
         /*anim.SetFloat("VerticalLast",_verticalLast);
         anim.SetFloat("HorizontalLast",_horizontalLast);

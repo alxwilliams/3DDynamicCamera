@@ -43,6 +43,7 @@ public class CameraControllerFollow : MonoBehaviour
     private float currentAngleDegrees;
     private Vector3 currentAngleVectorFromplayer;
     private float currentCamHeight;
+    private Vector3 lockedTargetPositionOffset = new Vector3(0,0,0);
     private Vector3 currentLookAtPosition;
     private float manualDistanceScaledIncrement;
     private float autoDistanceScaledIncrement;
@@ -104,55 +105,7 @@ public class CameraControllerFollow : MonoBehaviour
         ManualVertical();
     }
 
-    public void AddInteractableToList(Interactable obj)
-    {
-        interactables[interactables.Length - 1].AddedToList = false;
-        interactables[interactables.Length - 1] = obj;
-    }
-
-    private void QuickSortInteractables(int low, int high) //quicksort close interactable objects for use of targetting arrow and lock on targetting
-    {
-        if (low < high)
-        {
-            int i = PartitionInteractables(low, high);
-            
-            QuickSortInteractables(low,i-1);
-            QuickSortInteractables(i+1,high);
-        }
-    }
-
-    private int PartitionInteractables(int low, int high) //partitioning used for the quick sort function
-    {
-        Interactable pivot = interactables[high];
-        int i = low - 1;
-
-        for (int j = low; j < high; j++)
-        {
-
-            if (!interactables[j].CloseEnough)
-            {
-                interactables[j].AddedToList = false;
-                interactables[j] = new Interactable();
-            }
-            
-            if (interactables[j].CurrentDistanceFromPlayer <= pivot.CurrentDistanceFromPlayer)
-            {
-                i++;
-
-                Interactable temp = interactables[i];
-                interactables[i] = interactables[j];
-                interactables[j] = temp;
-            }
-            
-        }
-        
-        Interactable temp2 = interactables[i + 1];
-        interactables[i + 1] = interactables[high];
-        interactables[high] = temp2;
-
-        return i + 1;
-
-    }
+    
     private void FollowPlayerVertical()
     {
         if(Input.GetAxis(AxisInput.LEFT_VERTICAL) != 0 && !angleChanging && !strafeSpinCoroutine && !spinBackCoroutine)
@@ -251,133 +204,6 @@ public class CameraControllerFollow : MonoBehaviour
         float camDistanceDiff = _manualZoomOutDistance - _manualZoomInDistance;
         currentCamHeight = (currentCamDistanceBack - _autoZoomInDistance) / camDistanceDiff * camHeightDiff + _autoZoomInHeight;
     }
-    
-    private void Update()
-    {
-
-        if(Input.GetAxis(AxisInput.LEFT_TRIGGER) != 0)
-        {
-
-            if (!strafing)
-            {
-                if (interactables[0].CloseEnough)
-                {
-                    lockedTarget = interactables[0];
-                    lockedTarget.IsLockedOn = true;
-                    hasTarget = true;
-                }
-                strafeSpinCoroutine = true;
-                StartCoroutine(SpinToBack(true,_camStartingDistanceBack));
-                onFollow = true;
-            }
-            
-            if(!strafeSpinCoroutine)
-            {
-                ManualHorizontal();
-                if(onFollow)
-                    FollowPlayerVertical();
-                else
-                    ManualVertical();
-            }
-            
-            strafing = true;
-        }
-        else
-        {
-
-            strafing = false;
-            if(onFollow)
-            {
-                FollowPlayer();
-            }else
-            {
-                ManualPlacement();
-            }
-            
-            if (Input.GetAxis(AxisInput.RIGHT_HORIZONTAL) != 0)
-                onFollow = false;
-        }
-        
-        _strafeController.SetBool("StrifeOn",(strafing || strafeSpinCoroutine));
-        
-        if (lockedTarget.IsLockedOn == false && hasTarget && (!strafeSpinCoroutine || !spinBackCoroutine))
-        {
-            hasTarget = false;
-            spinBackCoroutine = true;
-            StartCoroutine(SpinToBack(true, currentCamDistanceBack));
-        }
-        
-        if (Input.GetAxis(AxisInput.RIGHT_VERTICAL) != 0)
-            onFollow = false;
-
-        /*if(lockedTarget.IsLockedOn)
-        {
-            if (facingPlayer)
-            {
-                angleChanging = true;
-                StartCoroutine(ChangeCameraLookAtAngle(player.transform.position + new Vector3(0, _midBodyLookHeight, 0)
-                    , (player.transform.position + new Vector3(0, _midBodyLookHeight, 0) +
-                       lockedTarget.transform.position + new Vector3(0, lockedTarget.YOffset, 0)) / 2));
-                facingPlayer = false;
-            }
-            else if (!angleChanging)
-            {
-                AdjustCamera((player.transform.position + new Vector3(0, _midBodyLookHeight, 0) +
-                              lockedTarget.transform.position + new Vector3(0, lockedTarget.YOffset, 0)) /
-                             2); //average between player position and locked on target}
-            }
-        }else
-        {
-            if(!facingPlayer)
-            {
-
-                angleChanging = true;
-                StartCoroutine(ChangeCameraLookAtAngle((player.transform.position + new Vector3(0, _midBodyLookHeight, 0) +
-                                                        lockedTarget.transform.position + new Vector3(0, lockedTarget.YOffset, 0)) / 2,player.transform.position + new Vector3(0, _midBodyLookHeight, 0)));
-                facingPlayer = true;
-            }
-            else if(!angleChanging)
-            {*/
-                AdjustCamera(player.transform.position + new Vector3(0,_midBodyLookHeight,0));
-            /*}
-            
-        }*/
-
-        MoveAndArrangeTargetArrows();
-    }
-
-    IEnumerator ChangeCameraLookAtAngle(Vector3 starting, Vector3 ending)
-    {
-        for (float t = 0; t <= _lookAtAngleChangeTime; t += Time.deltaTime)
-        {
-            Vector3 newAngleVector = starting + (ending - starting) * t / _lookAtAngleChangeTime;
-            AdjustCamera(newAngleVector);
-            yield return null;
-        }
-        angleChanging = false;
-    }
-
-    private void MoveAndArrangeTargetArrows()
-    {
-        QuickSortInteractables(0,interactables.Length-1);
-
-        if (lockedTarget.IsLockedOn)
-        {
-            _targetArrowImage.sprite = _mainTargetSprite;
-            _targetArrowTransform.gameObject.SetActive(true);
-            _targetArrowTransform.position = Camera.main.WorldToScreenPoint(lockedTarget.transform.position+new Vector3(0,lockedTarget.YOffset,0));
-        }
-        else if (interactables[0].CloseEnough)
-        {
-            _targetArrowImage.sprite = _passiveTargetSprite;
-            _targetArrowTransform.gameObject.SetActive(true);
-            _targetArrowTransform.position = Camera.main.WorldToScreenPoint(interactables[0].transform.position+new Vector3(0,interactables[0].YOffset,0));
-        }
-        else
-        {
-            _targetArrowTransform.gameObject.SetActive(false);
-        }
-    }
 
     private void DetermineCameraDistanceHeightVariables()
     {
@@ -412,6 +238,28 @@ public class CameraControllerFollow : MonoBehaviour
         currentCamHeight = (currentCamDistanceBack - _autoZoomInDistance) / camDistanceDiff * camHeightDiff + _autoZoomInHeight; // adjust the height to the starting distance
     }
 
+    private void LockedOnPerspective()
+    {
+        float currentAngle = currentAngleDegrees % 360;
+        float endingAngle = Mathf.Atan2((-player.transform.forward).z,(-player.transform.forward).x) * 180 / Mathf.PI;
+        
+        if ((endingAngle-currentAngle) < -180) //we're adjusting the ending angle to compensate for the angle only being in the range 0-360
+            endingAngle += 360;
+        else if ((endingAngle - currentAngle > 180))
+            endingAngle -= 360;
+
+        if (endingAngle - currentAngle >= 0)
+        {
+            endingAngle = endingAngle - 20;
+        }
+        else
+        {
+            endingAngle = endingAngle + 20;
+        }
+        currentAngleDegrees = currentAngle + (endingAngle - currentAngle) * Time.deltaTime;
+        currentAngleVectorFromplayer = new Vector3(Mathf.Cos(currentAngleDegrees * Mathf.PI / 180), 0, Mathf.Sin(currentAngleDegrees * Mathf.PI / 180));
+    }
+
     private IEnumerator SpinToBack(bool auto, float distanceBack)
     {
         
@@ -420,7 +268,19 @@ public class CameraControllerFollow : MonoBehaviour
         float startingDistanceBack = currentCamDistanceBack;
         float startingCamHeight = currentCamHeight;
         float spinTime;
-            
+
+        /*Vector3 startingCameraLookOffset = lockedTargetPositionOffset;
+        Vector3 endingCameraLookOffset;
+
+        if (lockedTarget.IsLockedOn)
+        {
+            endingCameraLookOffset = new Vector3(,player.tr,);
+        }
+        else
+        {
+            endingCameraLookOffset = new Vector3(0,0,0);
+        }*/
+
         endingAngle = Mathf.Atan2((-player.transform.forward).z,(-player.transform.forward).x) * 180 / Mathf.PI;
         
         if(lockedTarget.IsLockedOn)
@@ -433,16 +293,16 @@ public class CameraControllerFollow : MonoBehaviour
         }
         for(float t = 0; t< spinTime; t += Time.deltaTime)
         {
-            
+
+            //lockedTargetPositionOffset = Vector3.Lerp(startingCameraLookOffset, endingCameraLookOffset, t / spinTime);
+
             if ((endingAngle-startingAngle) < -180) //we're adjusting the ending angle to compensate for the angle only being in the range 0-360
                 endingAngle += 360;
             else if ((endingAngle - startingAngle > 180))
                 endingAngle -= 360;
-            
-            Debug.Log($"new ending angle:{endingAngle}");
-            
+
             currentAngleDegrees = Mathf.Lerp(startingAngle, endingAngle, t / spinTime);
-            currentAngleVectorFromplayer = new Vector3(Mathf.Cos(currentAngleDegrees * Mathf.PI / 180), 0, Mathf.Sin(currentAngleDegrees * Mathf.PI / 180)); // I think I gotta mess with stuff in here
+            currentAngleVectorFromplayer = new Vector3(Mathf.Cos(currentAngleDegrees * Mathf.PI / 180), 0, Mathf.Sin(currentAngleDegrees * Mathf.PI / 180));
 
             currentCamDistanceBack = Mathf.Lerp(startingDistanceBack, distanceBack, t / spinTime);
             
@@ -473,39 +333,197 @@ public class CameraControllerFollow : MonoBehaviour
         strafeSpinCoroutine = false;
         spinBackCoroutine = false;
     }
-    
-    // Update is called once per frame
+    private void Update()
+    {
+
+        if(Input.GetAxis(AxisInput.LEFT_TRIGGER) != 0)
+        {
+
+            if (!strafing)
+            {
+                if (interactables[0].CloseEnough)
+                {
+                    lockedTarget = interactables[0];
+                    lockedTarget.IsLockedOn = true;
+                    hasTarget = true;
+                }
+                strafeSpinCoroutine = true;
+                StartCoroutine(SpinToBack(true,_camStartingDistanceBack));
+                onFollow = true;
+            }
+            
+            if(!strafeSpinCoroutine)
+            {
+                
+                if (lockedTarget.IsLockedOn && onFollow)
+                {
+                    LockedOnPerspective();
+                }
+                else
+                {
+                    ManualHorizontal();
+                }
+                if(onFollow)
+                    FollowPlayerVertical();
+                else
+                    ManualVertical();
+            }
+            
+            strafing = true;
+        }
+        else
+        {
+
+            strafing = false;
+            if(onFollow)
+            {
+                FollowPlayer();
+            }else
+            {
+                ManualPlacement();
+            }
+            
+            if (Input.GetAxis(AxisInput.RIGHT_HORIZONTAL) != 0)
+                onFollow = false;
+        }
+        
+        _strafeController.SetBool("StrifeOn",(strafing || strafeSpinCoroutine));
+        
+        if(lockedTarget.IsLockedOn && hasTarget && (!strafeSpinCoroutine || !spinBackCoroutine) && Input.GetAxis((AxisInput.LEFT_TRIGGER)) == 0)
+        {
+            hasTarget = false;
+            lockedTarget.IsLockedOn = false;
+        }
+        else if (lockedTarget.CloseEnough == false && hasTarget && (!strafeSpinCoroutine || !spinBackCoroutine))
+        {
+            hasTarget = false;
+            lockedTarget.IsLockedOn = false;
+            spinBackCoroutine = true;
+            StartCoroutine(SpinToBack(true, currentCamDistanceBack));
+        }
+        
+        if (Input.GetAxis(AxisInput.RIGHT_VERTICAL) != 0)
+            onFollow = false;
+
+        AdjustToLockedOnTarget();
+        AdjustCamera(player.transform.position + new Vector3(0,_midBodyLookHeight,0));
+
+        MoveAndArrangeTargetArrows();
+    }
+
+    private void AdjustToLockedOnTarget()
+    {
+        Vector3 endGoal;
+        
+        if (lockedTarget.IsLockedOn)
+        {
+            float heightDifference = ((lockedTarget.transform.position.y +lockedTarget.YOffset)- (player.transform.position.y + _midBodyLookHeight));
+            float flatDifference =
+                Mathf.Sqrt(lockedTarget.CurrentDistanceFromPlayer * lockedTarget.CurrentDistanceFromPlayer -
+                           heightDifference * heightDifference);
+
+            if (float.IsNaN(flatDifference))
+                flatDifference = 0;
+            
+            endGoal = new Vector3(player.transform.forward.x * flatDifference/2,heightDifference/2 ,player.transform.forward.z * flatDifference/2);
+
+            if(lockedTargetPositionOffset != endGoal)
+            {
+                lockedTargetPositionOffset += (endGoal - lockedTargetPositionOffset) * Time.deltaTime;
+            }
+        }
+        else
+        {
+            endGoal = new Vector3(0,0,0);
+            
+            if(lockedTargetPositionOffset != endGoal)
+            {
+                lockedTargetPositionOffset += (endGoal - lockedTargetPositionOffset) * Time.deltaTime;
+            }
+        }
+    }
     private void AdjustCamera(Vector3 whereToLook)
     {
         transform.position = player.transform.position + currentCamDistanceBack * currentAngleVectorFromplayer + new Vector3(0,currentCamHeight,0);
 
-        /*if(spinCoroutine)
-        {
-            currentLookAtPosition -= (currentLookAtPosition - whereToLook) * Time.deltaTime;
-            transform.LookAt(currentLookAtPosition);
-        }
-        else
-        {*/
-        transform.LookAt(whereToLook);
-        //}
+        transform.LookAt(whereToLook + new Vector3(lockedTargetPositionOffset.x, 
+                                                                    lockedTargetPositionOffset.y, 
+                                                                lockedTargetPositionOffset.z));
     }
-
-    private void AdjustTransparency()
-    {
-        if (currentCamDistanceBack < 5)
-        {
-            float camRatio = (currentCamDistanceBack - 1) / 4;
-            
-            if (camRatio < 0)
-                camRatio = 0;
-             //playerRenderer.material.SetTexture("_Texture",); 
-            //playerRenderer.material.SetVector("_Alpha",new Vector4(camRatio,0,0,0)); 
-        }
-        else
-        {
-            //playerRenderer.material.SetVector("_Alpha",new Vector4(1,0,0,0));  
-        }
-    }
-
+    
     public GameObject Player => player;
+    
+    //QUICK SORT AND INTERACTABLE FUNCTIONS
+    
+    public void AddInteractableToList(Interactable obj)
+    {
+        interactables[interactables.Length - 1].AddedToList = false;
+        interactables[interactables.Length - 1] = obj;
+    }
+
+    private void QuickSortInteractables(int low, int high) //quicksort close interactable objects for use of targetting arrow and lock on targetting
+    {
+        if (low < high)
+        {
+            int i = PartitionInteractables(low, high);
+            
+            QuickSortInteractables(low,i-1);
+            QuickSortInteractables(i+1,high);
+        }
+    }
+
+    private int PartitionInteractables(int low, int high) //partitioning used for the quick sort function
+    {
+        Interactable pivot = interactables[high];
+        int i = low - 1;
+
+        for (int j = low; j < high; j++)
+        {
+
+            if (!interactables[j].CloseEnough)
+            {
+                interactables[j].AddedToList = false;
+                interactables[j] = new Interactable();
+            }
+            
+            if (interactables[j].CurrentDistanceFromPlayer <= pivot.CurrentDistanceFromPlayer)
+            {
+                i++;
+
+                Interactable temp = interactables[i];
+                interactables[i] = interactables[j];
+                interactables[j] = temp;
+            }
+            
+        }
+        
+        Interactable temp2 = interactables[i + 1];
+        interactables[i + 1] = interactables[high];
+        interactables[high] = temp2;
+
+        return i + 1;
+
+    }
+    
+    private void MoveAndArrangeTargetArrows()
+    {
+        QuickSortInteractables(0,interactables.Length-1);
+
+        if (lockedTarget.IsLockedOn)
+        {
+            _targetArrowImage.sprite = _mainTargetSprite;
+            _targetArrowTransform.gameObject.SetActive(true);
+            _targetArrowTransform.position = Camera.main.WorldToScreenPoint(lockedTarget.transform.position+new Vector3(0,lockedTarget.YOffset,0));
+        }
+        else if (interactables[0].CloseEnough)
+        {
+            _targetArrowImage.sprite = _passiveTargetSprite;
+            _targetArrowTransform.gameObject.SetActive(true);
+            _targetArrowTransform.position = Camera.main.WorldToScreenPoint(interactables[0].transform.position+new Vector3(0,interactables[0].YOffset,0));
+        }
+        else
+        {
+            _targetArrowTransform.gameObject.SetActive(false);
+        }
+    }
 }
