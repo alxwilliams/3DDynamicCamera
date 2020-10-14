@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class CameraControllerFollow : MonoBehaviour
 {
     [SerializeField] private GameObject player;
-    [SerializeField] private float _camStartingDistanceBack = 9;
+    [SerializeField] private float _camStartingDistanceBack = 12;
     [SerializeField] private float _midBodyLookHeight = 5;
     [SerializeField] private float _cameraManualTurnSpeed = 250f;
     [SerializeField] private float _camerAutoTurnSpeed = 155f;
@@ -21,19 +21,20 @@ public class CameraControllerFollow : MonoBehaviour
     [SerializeField] private float _manualZoomOutHeight = 15;
     [SerializeField] private float _manualZoomInHeight = 2;
 
-    [SerializeField] private float _zoomBackSpeed = 10f;
+    [SerializeField] private float _zoomBackSpeed = 20;
 
-    [SerializeField] private float _autoZoomingSpeed = 4;
-    [SerializeField] private float _autoZoomOutDistance = 12;
-    [SerializeField] private float _autoZoomInDistance = 8;
-    [SerializeField] private float _autoZoomOutHeight = 8;
-    [SerializeField] private float _autoZoomInHeight = 6;
+    [SerializeField] private float _autoZoomingSpeed = 2;
+    [SerializeField] private float _autoZoomOutDistance = 14;
+    [SerializeField] private float _autoZoomInDistance = 9;
+    [SerializeField] private float _autoZoomOutHeight = 7;
+    [SerializeField] private float _autoZoomInHeight = 5;
 
     [SerializeField] private Animator _strafeController;
-    [SerializeField] private float _spinAroundTime = 0.3f;
-    [SerializeField] private float _targetStrafeLookAroundTime = 1.3f;
+    [SerializeField] private float _spinAroundTime = 0.19f;
+    [SerializeField] private float _targetStrafeLookAroundTime = 0.6f;
 
-    [SerializeField] private float _lookAtAngleChangeTime = 1.5f;
+    [SerializeField] private float _lookAtAngleChangeTime = .01f;
+    [SerializeField] private float _lockOnTargetHeightTooHighAngleChange = 6.5f;
 
     [SerializeField] private Image _targetArrowImage;
     [SerializeField] private RectTransform _targetArrowTransform;
@@ -118,12 +119,12 @@ public class CameraControllerFollow : MonoBehaviour
             if (float.IsNaN(flatDifference))
                 flatDifference = 0;
 
-            float endDistance = flatDifference / 6 + _midBodyLookHeight * 2;
-            float endHeight = _midBodyLookHeight*6/8;
+            float endDistance = flatDifference / 2 + _midBodyLookHeight * 2;
+            float endHeight = (heightDifference > _lockOnTargetHeightTooHighAngleChange) ? 1.0f : (_midBodyLookHeight * 6 / 8 + (flatDifference / 3));
             
             currentCamDistanceBack += (endDistance - currentCamDistanceBack) * Time.deltaTime;
             currentCamHeight += (endHeight - currentCamHeight) * Time.deltaTime;
-            
+
             /*currentCamDistanceBack = flatDifference/6 + _midBodyLookHeight*2;
             currentCamHeight = _midBodyLookHeight*6/8;*/
         }
@@ -139,19 +140,7 @@ public class CameraControllerFollow : MonoBehaviour
             }
         }
 
-        if (lockedTarget.IsLockedOn) //if strafing with target
-        {
-            /*if (currentCamDistanceBack < _autoZoomInDistance)
-            {
-                currentCamDistanceBack +=
-                    Time.deltaTime * (_autoZoomInDistance - currentCamDistanceBack) *_zoomBackSpeed/5;
-            }else if (currentCamDistanceBack > lockedTarget.CurrentDistanceFromPlayer)
-            {
-                currentCamDistanceBack -=
-                    Time.deltaTime * (currentCamDistanceBack - lockedTarget.CurrentDistanceFromPlayer) *_zoomBackSpeed/5;
-            }*/
-        }
-        else
+        if (!lockedTarget.IsLockedOn)
         {
             if (currentCamHeight < _autoZoomInHeight)
                 currentCamHeight += Time.deltaTime * (_autoZoomInHeight - currentCamHeight) * _zoomBackSpeed;
@@ -190,30 +179,97 @@ public class CameraControllerFollow : MonoBehaviour
 
     private void ManualVertical()
     {
-        if (Input.GetAxis(AxisInput.RIGHT_VERTICAL) != 0 && !angleChanging && !strafeSpinCoroutine && !spinBackCoroutine)
+        float minClamp = -1;
+        float maxClamp = 1;
+
+        float endHeight;
+
+        if(!lockedTarget.IsLockedOn)
         {
-            float minClamp = -1;
-            float maxClamp = 1;
-            if (currentCamDistanceBack <= _manualZoomInDistance)
-                maxClamp = 0;
-            if (currentCamDistanceBack >= _manualZoomOutDistance)
-                minClamp = 0;
             
-            //this clamp is so it can keep taking input from the joystick when it's reached one of it's two limits being 1 and -1
-            currentCamDistanceBack -= Mathf.Clamp(Input.GetAxis(AxisInput.RIGHT_VERTICAL),minClamp,maxClamp) * Time.deltaTime * _manualZoomingSpeed *manualDistanceScaledIncrement;
+            if (Input.GetAxis(AxisInput.RIGHT_VERTICAL) != 0 && !angleChanging && !strafeSpinCoroutine && !spinBackCoroutine)
+            {
+                if (currentCamDistanceBack <= _manualZoomInDistance)
+                    maxClamp = 0;
+                if (currentCamDistanceBack >= _manualZoomOutDistance)
+                    minClamp = 0;
+                //this clamp is so it can keep taking input from the joystick when it's reached one of it's two limits being 1 and -1
+                currentCamDistanceBack -= Mathf.Clamp(Input.GetAxis(AxisInput.RIGHT_VERTICAL),minClamp,maxClamp) * Time.deltaTime * _manualZoomingSpeed *manualDistanceScaledIncrement;
+            }
+            
+            if (currentCamDistanceBack < _manualZoomInDistance)
+                currentCamDistanceBack +=
+                    Time.deltaTime * (_manualZoomInDistance - currentCamDistanceBack) * _zoomBackSpeed;
+            else if (currentCamDistanceBack > _manualZoomOutDistance)
+                currentCamDistanceBack -=
+                    Time.deltaTime * (currentCamDistanceBack - _manualZoomOutDistance) * _zoomBackSpeed;
+
+
+            float camHeightDiff = _manualZoomOutHeight - _manualZoomInHeight;
+            float camDistanceDiff = _manualZoomOutDistance - _manualZoomInDistance;
+
+            endHeight = (currentCamDistanceBack - _manualZoomInDistance) / camDistanceDiff * camHeightDiff +
+                              _manualZoomInHeight; // i just changed these two values from auto to manual. should probably make sure they're fine
             
         }
+        else
+        {
+            
+            float heightDifference = ((lockedTarget.transform.position.y +lockedTarget.YOffset)- (player.transform.position.y + _midBodyLookHeight));
+            float flatDifference =
+                Mathf.Sqrt(lockedTarget.CurrentDistanceFromPlayer * lockedTarget.CurrentDistanceFromPlayer -
+                           heightDifference * heightDifference);
 
-        if (currentCamDistanceBack < _manualZoomInDistance)
-            currentCamDistanceBack += Time.deltaTime * (_manualZoomInDistance - currentCamDistanceBack) *_zoomBackSpeed;
-        else if (currentCamDistanceBack > _manualZoomOutDistance)
-            currentCamDistanceBack -= Time.deltaTime * (currentCamDistanceBack - _manualZoomOutDistance) *_zoomBackSpeed;
+            if (float.IsNaN(flatDifference))
+                flatDifference = 0;
+            
+            float minDistance = flatDifference / 3+ _midBodyLookHeight * 2;
+            float maxDistance = flatDifference /2 + _midBodyLookHeight * 2;
+            
+            if (Input.GetAxis(AxisInput.RIGHT_VERTICAL) != 0 && !angleChanging && !strafeSpinCoroutine && !spinBackCoroutine)
+            {
+                if (currentCamDistanceBack <= minDistance)
+                    maxClamp = 0;
+                if (currentCamDistanceBack >= maxDistance)
+                    minClamp = 0;
+                //this clamp is so it can keep taking input from the joystick when it's reached one of it's two limits being 1 and -1
+                currentCamDistanceBack -= Mathf.Clamp(Input.GetAxis(AxisInput.RIGHT_VERTICAL),minClamp,maxClamp) * Time.deltaTime * _manualZoomingSpeed;
+            }
+            
+            if (currentCamDistanceBack < minDistance)
+                currentCamDistanceBack +=
+                    Time.deltaTime * (minDistance - currentCamDistanceBack) * _zoomBackSpeed;
+            else if (currentCamDistanceBack > maxDistance)
+                currentCamDistanceBack -=
+                    Time.deltaTime * (currentCamDistanceBack - maxDistance) * _zoomBackSpeed;
+
+            float startingAngle = currentAngleDegrees % 360;
+            float endingAngle = ClosestAngleToBackOfPlayer();
+
+            if (minDistance == maxDistance)
+                endHeight = maxDistance;
+            else
+                endHeight = (((currentCamDistanceBack - minDistance) / (maxDistance - minDistance)) * //this line is the fraction of where the cam in respect to the min and max distance (ex: 4 is 3/4th in between min: 1 and max: 5)
+                         ((heightDifference * 3 / 4) +_midBodyLookHeight - 1)) + 1;
+
+            float angleDiff = Mathf.Abs(endingAngle - startingAngle);
+            
+            if (angleDiff > 60 && heightDifference > 0)
+            {
+                endHeight += heightDifference * 1.7f;
+            }else if (angleDiff > 40 && heightDifference < 0)
+            {
+                endHeight += heightDifference * 2.2f;
+            }
+
+        }
+        
+        currentCamHeight += (endHeight - currentCamHeight) * Time.deltaTime;
+
+        //currentCamHeight = Mathf.Clamp(currentCamHeight, 1, 25);
         
         
-        float camHeightDiff = _manualZoomOutHeight - _manualZoomInHeight;
-        float camDistanceDiff = _manualZoomOutDistance - _manualZoomInDistance;
-        currentCamHeight = (currentCamDistanceBack - _autoZoomInDistance) / camDistanceDiff * camHeightDiff + _autoZoomInHeight;
-        
+
     }
 
     private void DetermineCameraDistanceHeightVariables()
@@ -252,12 +308,7 @@ public class CameraControllerFollow : MonoBehaviour
     private void LockedOnPerspective()
     {
         float currentAngle = currentAngleDegrees % 360;
-        float endingAngle = Mathf.Atan2((-player.transform.forward).z,(-player.transform.forward).x) * 180 / Mathf.PI;
-        
-        if ((endingAngle-currentAngle) < -180) //we're adjusting the ending angle to compensate for the angle only being in the range 0-360
-            endingAngle += 360;
-        else if ((endingAngle - currentAngle > 180))
-            endingAngle -= 360;
+        float endingAngle = ClosestAngleToBackOfPlayer();
 
         if (endingAngle - currentAngle >= 75) // this group of if statements gives the locked on camera boundaries (example, behind the back, should go to over the shoulder 20 degrees, behind the enemy sshould go to side view 75 degrees
         {
@@ -283,6 +334,22 @@ public class CameraControllerFollow : MonoBehaviour
         currentAngleVectorFromplayer = new Vector3(Mathf.Cos(currentAngleDegrees * Mathf.PI / 180), 0, Mathf.Sin(currentAngleDegrees * Mathf.PI / 180));
     }
 
+    private float ClosestAngleToBackOfPlayer()
+    {
+        float startingAngle = currentAngleDegrees % 360;
+        float endingAngle;
+        
+        endingAngle = Mathf.Atan2((-player.transform.forward).z,(-player.transform.forward).x) * 180 / Mathf.PI;
+        
+        if ((endingAngle-startingAngle) < -180) //we're adjusting the ending angle to compensate for the angle only being in the range 0-360
+            endingAngle += 360;
+        else if ((endingAngle - startingAngle > 180))
+            endingAngle -= 360;
+
+        return endingAngle;
+
+    }
+
     private IEnumerator SpinToBack(bool auto, float distanceBack)
     {
         
@@ -304,7 +371,6 @@ public class CameraControllerFollow : MonoBehaviour
             endingCameraLookOffset = new Vector3(0,0,0);
         }*/
 
-        endingAngle = Mathf.Atan2((-player.transform.forward).z,(-player.transform.forward).x) * 180 / Mathf.PI;
         
         if(lockedTarget.IsLockedOn)
         {
@@ -317,12 +383,7 @@ public class CameraControllerFollow : MonoBehaviour
         for(float t = 0; t< spinTime; t += Time.deltaTime)
         {
 
-            //lockedTargetPositionOffset = Vector3.Lerp(startingCameraLookOffset, endingCameraLookOffset, t / spinTime);
-
-            if ((endingAngle-startingAngle) < -180) //we're adjusting the ending angle to compensate for the angle only being in the range 0-360
-                endingAngle += 360;
-            else if ((endingAngle - startingAngle > 180))
-                endingAngle -= 360;
+            endingAngle = ClosestAngleToBackOfPlayer();
 
             currentAngleDegrees = Mathf.Lerp(startingAngle, endingAngle, t / spinTime);
             currentAngleVectorFromplayer = new Vector3(Mathf.Cos(currentAngleDegrees * Mathf.PI / 180), 0, Mathf.Sin(currentAngleDegrees * Mathf.PI / 180));
@@ -440,7 +501,7 @@ public class CameraControllerFollow : MonoBehaviour
         
         if (Input.GetAxis(AxisInput.RIGHT_VERTICAL) != 0)
             onFollow = false;
-
+        
         AdjustToLockedOnTarget();
         AdjustCamera(player.transform.position + new Vector3(0,_midBodyLookHeight,0));
 
@@ -461,7 +522,7 @@ public class CameraControllerFollow : MonoBehaviour
             if (float.IsNaN(flatDifference))
                 flatDifference = 0;
             
-            endGoal = new Vector3(player.transform.forward.x * flatDifference/2,-_midBodyLookHeight/4,player.transform.forward.z * flatDifference/2);
+            endGoal = new Vector3(player.transform.forward.x * flatDifference/2, (heightDifference > _lockOnTargetHeightTooHighAngleChange)? heightDifference/4 : -_midBodyLookHeight/4,player.transform.forward.z * flatDifference/2);
 
             if(lockedTargetPositionOffset != endGoal)
             {
@@ -481,6 +542,8 @@ public class CameraControllerFollow : MonoBehaviour
     private void AdjustCamera(Vector3 whereToLook)
     {
         transform.position = player.transform.position + currentCamDistanceBack * currentAngleVectorFromplayer + new Vector3(0,currentCamHeight,0);
+        
+        //TODO: when terrain is added, make sure you are downwards casting to find out how high ground is and making sure you don't go through it
 
         transform.LookAt(whereToLook + new Vector3(lockedTargetPositionOffset.x, 
                                                                     lockedTargetPositionOffset.y, 

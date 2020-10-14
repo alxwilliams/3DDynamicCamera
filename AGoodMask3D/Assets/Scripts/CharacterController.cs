@@ -83,33 +83,13 @@ public class CharacterController : MonoBehaviour
 
     private void Movement(){
 
-        if (_xDirection != 0 || _zDirection != 0)
-            _walking = true;
-        else
-            _walking = false;
-        
-            //AnimationCheck();
-        
-        /*if (_xDirection != 0 && _zDirection != 0)
-        {
-            _xDirection = _xDirection * Mathf.Acos(45 * Mathf.PI/180);
-            _zDirection = _zDirection * Mathf.Acos(45 * Mathf.PI/180);
-        }*/
+        //RayCastCollision(); //keep raycast collision here and stop x or z direction so it sets the animation float correctly
 
-        /*anim.SetFloat("VerticalLast",_verticalLast);
-        anim.SetFloat("HorizontalLast",_horizontalLast);
-        anim.SetBool("Walking",_walking);*/
         
-        //RayCastCollision();
-
-        if (!_walking)
-        {
-            anim.SetFloat("Speed",0f);
-        }
+        if(Mathf.Abs(_zDirection) > Mathf.Abs(_xDirection))
+            anim.SetFloat("Speed",Mathf.Abs(_zDirection));
         else
-        {
-            anim.SetFloat("Speed", 5.0f);
-        }
+            anim.SetFloat("Speed",Mathf.Abs(_xDirection));
 
         var moveX = _xDirection * speed * new Vector3(cam.transform.right.x,0,cam.transform.right.z);
         var moveZ = _zDirection * speed * new Vector3(cam.transform.forward.x,0,cam.transform.forward.z);
