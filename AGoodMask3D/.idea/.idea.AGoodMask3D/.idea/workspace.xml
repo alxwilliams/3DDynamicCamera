@@ -3,6 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="d739253e-328a-4bd9-8cf8-8d845577dc1e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.AGoodMask3D/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AGoodMask3D/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/GooseController.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/GooseController.controller" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Models/Goose_IK_Final.fbx" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/Goose_IK_Final.fbx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,7 +93,7 @@
       <workItem from="1600804989431" duration="9554000" />
       <workItem from="1601311938272" duration="68919000" />
       <workItem from="1601694925892" duration="61244000" />
-      <workItem from="1602633377740" duration="3590000" />
+      <workItem from="1602633377740" duration="4778000" />
     </task>
     <servers />
   </component>
