@@ -3,22 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d739253e-328a-4bd9-8cf8-8d845577dc1e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.AGoodMask3D/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AGoodMask3D/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animations/GooseController.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/GooseController.controller" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/BodyTexture.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/BodyTexture.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/BodyTexture.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/BodyTexture.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/MaskTexture.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/MaskTexture.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/MaskTexture.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/MaskTexture.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CharacterController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CharacterController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ToonLight.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ToonLight.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Shaders/ToonShader.shadergraph" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Shaders/ToonShader.shadergraph" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Shaders/ToonShader_GooseBody.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Shaders/ToonShader_GooseBody.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Shaders/ToonShader_Mask.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Shaders/ToonShader_Mask.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Sprites/PassiveTargetArrow.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/PassiveTargetArrow.controller" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ToonShaderSubGraph.shadersubgraph" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ToonShaderSubGraph.shadersubgraph" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

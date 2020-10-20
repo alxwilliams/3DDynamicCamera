@@ -412,7 +412,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 1.0632e-41, y: 1.01e-43, z: 2.0824167e+23, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 2.75508e-40, w: -7.61e-43}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -654,7 +654,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 6.2e-44, z: 9.138e-42, w: 5.9e-44}
+  m_BoundingSphereOverride: {x: 7.16e-43, y: 1.01e-43, z: 2.3877232e-38, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -690,7 +690,7 @@ MonoBehaviour:
   anim: {fileID: 1339456537}
   cam: {fileID: 963194227}
   _camDefaultHeight: -2.7
-  speed: 10
+  speed: 20
 --- !u!4 &800718754
 Transform:
   m_ObjectHideFlags: 0
@@ -1328,17 +1328,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 294c7ef18352c3b45911bb6c41b0b552,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 16.868351
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 294c7ef18352c3b45911bb6c41b0b552,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.93159837
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 294c7ef18352c3b45911bb6c41b0b552,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -33.823627
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 294c7ef18352c3b45911bb6c41b0b552,
         type: 3}
@@ -1539,7 +1539,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 9.138e-42, y: 1.01e-43, z: 1.0963, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 2.75508e-40, w: -7.61e-43}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
