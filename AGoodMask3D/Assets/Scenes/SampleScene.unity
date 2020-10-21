@@ -366,7 +366,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.122641504, g: 0.18399233, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -412,7 +412,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 2.75508e-40, w: -7.61e-43}
+  m_BoundingSphereOverride: {x: 0, y: 3.8939e-41, z: 0, w: 9.625}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -569,7 +569,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &764913318
 Transform:
   m_ObjectHideFlags: 0
@@ -654,7 +654,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 7.16e-43, y: 1.01e-43, z: 2.3877232e-38, w: 0}
+  m_BoundingSphereOverride: {x: 7.17e-43, y: 1.058e-42, z: 0, w: 5.698452}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -847,9 +847,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2538f4324ed87b640a04db049dc51920, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  light1: {fileID: 705507994}
+  mainLight: {fileID: 705507994}
   light2: {fileID: 764913320}
   light3: {fileID: 1820561989}
+  blankColor: {r: 1, g: 1, b: 1, a: 0}
 --- !u!1 &893639768
 GameObject:
   m_ObjectHideFlags: 0
@@ -1455,7 +1456,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1820561987
 Transform:
   m_ObjectHideFlags: 0

@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d739253e-328a-4bd9-8cf8-8d845577dc1e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/Models/Goose_IK_Final.fbx" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/Goose_IK_Final.fbx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.AGoodMask3D/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AGoodMask3D/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/ColorRamp.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/ColorRamp.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ToonLight.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ToonLight.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,9 +32,9 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Assets/Scripts/Interactable.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/CharacterController.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/ToonLight.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/CharacterController.cs" />
       </list>
     </option>
   </component>
@@ -90,7 +94,7 @@
       <workItem from="1600804989431" duration="9554000" />
       <workItem from="1601311938272" duration="68919000" />
       <workItem from="1601694925892" duration="61244000" />
-      <workItem from="1602633377740" duration="7067000" />
+      <workItem from="1602633377740" duration="8894000" />
     </task>
     <servers />
   </component>
@@ -236,10 +240,10 @@
           <line>524</line>
           <properties documentPath="$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs" initialLine="462">
             <startOffsets>
-              <option value="21548" />
+              <option value="21594" />
             </startOffsets>
             <endOffsets>
-              <option value="21767" />
+              <option value="21813" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="39" />

@@ -423,7 +423,7 @@ public class CameraControllerFollow : MonoBehaviour
         if(Input.GetAxis(AxisInput.LEFT_TRIGGER) != 0)
         {
 
-            if (!strafing)
+            if (!strafing && !strafeSpinCoroutine && !spinBackCoroutine)
             {
                 if (interactables[0].CloseEnough)
                 {
@@ -475,12 +475,12 @@ public class CameraControllerFollow : MonoBehaviour
         
         _strafeController.SetBool("StrifeOn",(strafing || strafeSpinCoroutine));
         
-        if(lockedTarget.IsLockedOn && hasTarget && (!strafeSpinCoroutine || !spinBackCoroutine) && Input.GetAxis((AxisInput.LEFT_TRIGGER)) == 0) //when strafe button is let go, don't spin the camera back but leave target
+        if(lockedTarget.IsLockedOn && hasTarget && (!strafeSpinCoroutine && !spinBackCoroutine) && Input.GetAxis((AxisInput.LEFT_TRIGGER)) == 0) //when strafe button is let go, don't spin the camera back but leave target
         {
             hasTarget = false;
             lockedTarget.IsLockedOn = false;
         }
-        else if (lockedTarget.CloseEnough == false && hasTarget && (!strafeSpinCoroutine || !spinBackCoroutine))
+        else if (lockedTarget.CloseEnough == false && hasTarget && (!strafeSpinCoroutine && !spinBackCoroutine))
         {
             lockedTarget.IsLockedOn = false;
             
