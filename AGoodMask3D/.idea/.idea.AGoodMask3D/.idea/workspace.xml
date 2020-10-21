@@ -5,7 +5,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.AGoodMask3D/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AGoodMask3D/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Animations/GooseController.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/GooseController.controller" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Models/Goose_IK_Final.fbx" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/Goose_IK_Final.fbx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Models/Goose_IK_Final.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/Goose_IK_Final.fbx.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CharacterController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CharacterController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Shaders/BodyToon.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Shaders/BodyToon.mat" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,8 +34,8 @@
       <list>
         <option value="$PROJECT_DIR$/Assets/Scripts/Interactable.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/ToonLight.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/CharacterController.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/CharacterController.cs" />
       </list>
     </option>
   </component>
@@ -93,7 +95,7 @@
       <workItem from="1600804989431" duration="9554000" />
       <workItem from="1601311938272" duration="68919000" />
       <workItem from="1601694925892" duration="61244000" />
-      <workItem from="1602633377740" duration="4778000" />
+      <workItem from="1602633377740" duration="6380000" />
     </task>
     <servers />
   </component>
@@ -210,26 +212,26 @@
       <breakpoints>
         <line-breakpoint type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/CharacterController.cs</url>
-          <line>40</line>
+          <line>41</line>
           <properties documentPath="$PROJECT_DIR$/Assets/Scripts/CharacterController.cs" initialLine="38">
             <startOffsets>
-              <option value="1631" />
+              <option value="1684" />
             </startOffsets>
             <endOffsets>
-              <option value="1653" />
+              <option value="1706" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/CharacterController.cs</url>
-          <line>45</line>
+          <line>46</line>
           <properties documentPath="$PROJECT_DIR$/Assets/Scripts/CharacterController.cs" initialLine="43">
             <startOffsets>
-              <option value="1849" />
+              <option value="1902" />
             </startOffsets>
             <endOffsets>
-              <option value="1868" />
+              <option value="1921" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="3" />

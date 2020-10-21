@@ -691,6 +691,7 @@ MonoBehaviour:
   cam: {fileID: 963194227}
   _camDefaultHeight: -2.7
   speed: 20
+  strafeSpeed: 10
 --- !u!4 &800718754
 Transform:
   m_ObjectHideFlags: 0

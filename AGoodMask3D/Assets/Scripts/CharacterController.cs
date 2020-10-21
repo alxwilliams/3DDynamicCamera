@@ -9,7 +9,8 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private Animator anim;
     [SerializeField] private Camera cam;
     [SerializeField] private float _camDefaultHeight = -2.7f;
-    [SerializeField] private float speed = 10;
+    [SerializeField] private float speed = 20;
+    [SerializeField] private float strafeSpeed = 10;
     private bool _usingKeyboard = false;
     private bool _rightArrow = false;
     private bool _leftArrow = false;
@@ -91,9 +92,27 @@ public class CharacterController : MonoBehaviour
         else
             anim.SetFloat("Speed",Mathf.Abs(_xDirection));
 
-        var moveX = _xDirection * speed * new Vector3(cam.transform.right.x,0,cam.transform.right.z);
-        var moveZ = _zDirection * speed * new Vector3(cam.transform.forward.x,0,cam.transform.forward.z);
+        Vector3 moveX;
+        Vector3 moveZ;
+        
+        
+        if(camScript.LockedTarget.IsLockedOn || Input.GetAxis(AxisInput.LEFT_TRIGGER) != 0)
+        {
+            anim.SetBool("Strafing", true);
+            moveX = _xDirection * strafeSpeed * new Vector3(cam.transform.right.x,0,cam.transform.right.z);
+            moveZ = _zDirection * strafeSpeed * new Vector3(cam.transform.forward.x,0,cam.transform.forward.z);
+        }
+        else
+        {
+            anim.SetBool("Strafing", false);
+            moveX = _xDirection * speed * new Vector3(cam.transform.right.x,0,cam.transform.right.z);
+            moveZ = _zDirection * speed * new Vector3(cam.transform.forward.x,0,cam.transform.forward.z);
+        }
+        
         var movement = moveX + moveZ;
+        
+        anim.SetFloat("ForwardMotion", _zDirection);
+        anim.SetFloat("HorizontalMotion",_xDirection);
             
         movement *= Time.deltaTime;
 
