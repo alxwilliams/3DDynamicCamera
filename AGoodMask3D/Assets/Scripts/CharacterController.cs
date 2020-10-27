@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
@@ -11,6 +12,7 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private float _camDefaultHeight = -2.7f;
     [SerializeField] private float speed = 20;
     [SerializeField] private float strafeSpeed = 10;
+    [SerializeField] private float _fallSpeed = 10f;
     private bool _usingKeyboard = false;
     private bool _rightArrow = false;
     private bool _leftArrow = false;
@@ -21,7 +23,20 @@ public class CharacterController : MonoBehaviour
     private float _xDirection = 0;
 
     private Vector3 lastSpot;
-    private CameraControllerFollow camScript;
+    [SerializeField] private CameraControllerFollow camScript;
+    private Rigidbody rb;
+    [SerializeField] private BoxCollider bc;
+
+    private float groundDistance = 1000;
+    
+    private bool isGrounded = false;
+    private Vector3 currentGravity;
+    ContactPoint[] cPoints; 
+    public float maxGroundedAngle = 45f;
+    Vector3 groundNormal;
+    private float objectSlantAngle = 0;
+    private float angleFromObject = 0;
+    
     
     public static class AxisInput {
         public const string LEFT_HORIZONTAL = "Horizontal";
@@ -108,13 +123,23 @@ public class CharacterController : MonoBehaviour
             moveX = _xDirection * speed * new Vector3(cam.transform.right.x,0,cam.transform.right.z);
             moveZ = _zDirection * speed * new Vector3(cam.transform.forward.x,0,cam.transform.forward.z);
         }
-        
+
         var movement = moveX + moveZ;
+        
+        /*if (rb.velocity.x == 0)
+            movement = new Vector3(0,0,movement.z);
+
+        if (rb.velocity.z == 0)
+            movement = new Vector3(movement.x,0,0);
+            */
+        
+        
         
         anim.SetFloat("ForwardMotion", _zDirection);
         anim.SetFloat("HorizontalMotion",_xDirection);
             
         movement *= Time.deltaTime;
+        rb.velocity = new Vector3(0,rb.velocity.y,0);
 
         
         if(_xDirection != 0 || _zDirection !=0)
@@ -130,13 +155,124 @@ public class CharacterController : MonoBehaviour
         {
             transform.LookAt( new Vector3(camScript.LockedTarget.transform.position.x,transform.position.y,camScript.LockedTarget.transform.position.z));
         }
+
+        BoxCastCollision();
+
+        /*float footPosition = (bc.center.y + transform.position.y) - bc.size.y/2;
+        float yMovement = 0;
+        */
         
-        transform.position += movement;
+        
+        /*
+        if (groundDistance > footPosition && groundDistance != 1000)
+            yMovement = groundDistance - footPosition;
+        else if (footPosition - groundDistance < _fallSpeed && groundDistance != 1000)
+            yMovement = -(footPosition - groundDistance);
+        else
+            yMovement = -_fallSpeed;
+
+        if (yMovement > 0)
+        {
+            int i = 0;
+        }*/
+
+        if (objectSlantAngle > 45)
+        {
+            angleFromObject = (angleFromObject - 180) * Mathf.PI / 180;
+            
+            Vector3 angleHit = new Vector3( transform.forward.x * Mathf.Cos(angleFromObject) + transform.forward.z * Mathf.Sin(angleFromObject),
+                transform.forward.y,
+                -transform.forward.x * Mathf.Sin(angleFromObject) + transform.forward.z * Mathf.Cos(angleFromObject));  //rotating forward vector around angleFromObject
+
+            movement = movement - Vector3.Project(movement, angleHit);
+        }
+
+        if (!isGrounded)
+        {
+            currentGravity = Physics.gravity;
+        }
+        else
+        {
+
+            
+            currentGravity = -groundNormal * Physics.gravity.magnitude;
+            
+            if (rb.velocity.y >0)
+            {
+                rb.velocity = Vector3.zero;
+            }
+        }
+        
+        rb.AddForce(currentGravity, ForceMode.Acceleration);
+        transform.position += (movement);
+        
+        
+
+    }
+
+    void OnCollisionStay(Collision ourCollision)
+    {
+        isGrounded = CheckGrounded(ourCollision);
+    }
+
+    private void OnCollisionExit(Collision other)
+    {
+        isGrounded = false;
+        groundNormal = new Vector3();
+    }
+
+    bool CheckGrounded(Collision newCol)
+    {
+        cPoints = new ContactPoint[newCol.contactCount];
+        newCol.GetContacts(cPoints);
+        foreach (ContactPoint cP in cPoints)
+        {
+            //Debug.LogError(Vector3.Angle(cP.normal, -Physics.gravity.normalized));
+            
+            if (maxGroundedAngle > Vector3.Angle(cP.normal, -Physics.gravity.normalized))
+            {
+                groundNormal = cP.normal;
+                return true;
+            }
+            else
+            {
+                //Debug.LogError(Vector3.Angle(cP.normal, -Physics.gravity.normalized));
+            }
+        }
+
+        return false;
     }
 
     void Start()
     {
-        camScript = cam.GetComponent<CameraControllerFollow>();
+        rb = GetComponent<Rigidbody>();
+    }
+
+    private void BoxCastCollision()
+    {
+
+        RaycastHit hit;
+
+        if (Physics.BoxCast(bc.transform.position + bc.center,
+            new Vector3(bc.size.x/2, bc.size.y/2, bc.size.z/2), transform.forward, out hit,
+            Quaternion.identity, 1))
+        {
+
+            if (hit.transform.gameObject.CompareTag("Solid"))
+            {
+                objectSlantAngle = Vector3.Angle(hit.normal, -Physics.gravity.normalized);
+                angleFromObject =  Vector3.Angle(hit.normal, transform.forward);
+                //also find angle between point and player
+            }
+            else
+            {
+                objectSlantAngle = 0;
+            }
+
+        }else
+        {
+            objectSlantAngle = 0;
+        }
     }
 
 }
