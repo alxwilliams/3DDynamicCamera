@@ -109,7 +109,7 @@ public class CameraControllerFollow : MonoBehaviour
     
     private void FollowPlayerVertical()
     {
-        if (lockedTarget.IsLockedOn) 
+        if (lockedTarget != null && lockedTarget.IsLockedOn) 
         {
             float heightDifference = ((lockedTarget.transform.position.y +lockedTarget.YOffset)- (player.transform.position.y + _midBodyLookHeight));
             float flatDifference =
@@ -140,7 +140,7 @@ public class CameraControllerFollow : MonoBehaviour
             }
         }
 
-        if (!lockedTarget.IsLockedOn)
+        if (lockedTarget == null || !lockedTarget.IsLockedOn)
         {
             if (currentCamHeight < _autoZoomInHeight)
                 currentCamHeight += Time.deltaTime * (_autoZoomInHeight - currentCamHeight) * _zoomBackSpeed;
@@ -184,7 +184,7 @@ public class CameraControllerFollow : MonoBehaviour
 
         float endHeight;
 
-        if(!lockedTarget.IsLockedOn)
+        if(lockedTarget == null || !lockedTarget.IsLockedOn)
         {
             
             if (Input.GetAxis(AxisInput.RIGHT_VERTICAL) != 0 && !angleChanging && !strafeSpinCoroutine && !spinBackCoroutine)
@@ -265,10 +265,6 @@ public class CameraControllerFollow : MonoBehaviour
         }
         
         currentCamHeight += (endHeight - currentCamHeight) * Time.deltaTime;
-
-        //currentCamHeight = Mathf.Clamp(currentCamHeight, 1, 25);
-        
-        
 
     }
 
@@ -475,12 +471,12 @@ public class CameraControllerFollow : MonoBehaviour
         
         _strafeController.SetBool("StrifeOn",(strafing || strafeSpinCoroutine));
         
-        if(lockedTarget.IsLockedOn && hasTarget && (!strafeSpinCoroutine && !spinBackCoroutine) && Input.GetAxis((AxisInput.LEFT_TRIGGER)) == 0) //when strafe button is let go, don't spin the camera back but leave target
+        if(lockedTarget != null && lockedTarget.IsLockedOn && hasTarget && (!strafeSpinCoroutine && !spinBackCoroutine) && Input.GetAxis((AxisInput.LEFT_TRIGGER)) == 0) //when strafe button is let go, don't spin the camera back but leave target
         {
             hasTarget = false;
             lockedTarget.IsLockedOn = false;
         }
-        else if (lockedTarget.CloseEnough == false && hasTarget && (!strafeSpinCoroutine && !spinBackCoroutine))
+        else if (lockedTarget != null && lockedTarget.CloseEnough == false && hasTarget && (!strafeSpinCoroutine && !spinBackCoroutine))
         {
             lockedTarget.IsLockedOn = false;
             
@@ -512,7 +508,7 @@ public class CameraControllerFollow : MonoBehaviour
     {
         Vector3 endGoal;
         
-        if (lockedTarget.IsLockedOn)
+        if (lockedTarget != null && lockedTarget.IsLockedOn)
         {
             float heightDifference = ((lockedTarget.transform.position.y +lockedTarget.YOffset)- (player.transform.position.y + _midBodyLookHeight));
             float flatDifference =
@@ -579,7 +575,7 @@ public class CameraControllerFollow : MonoBehaviour
         for (int j = low; j < high; j++)
         {
 
-            if (!interactables[j].CloseEnough)
+            if (interactables[j] == null || !interactables[j].CloseEnough)
             {
                 interactables[j].AddedToList = false;
                 interactables[j] = new Interactable();

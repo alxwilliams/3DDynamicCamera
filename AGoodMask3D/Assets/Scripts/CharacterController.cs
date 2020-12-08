@@ -111,7 +111,8 @@ public class CharacterController : MonoBehaviour
         Vector3 moveZ;
         
         
-        if(camScript.LockedTarget.IsLockedOn || Input.GetAxis(AxisInput.LEFT_TRIGGER) != 0)
+        if(camScript.LockedTarget != null &&
+           (camScript.LockedTarget.IsLockedOn || Input.GetAxis(AxisInput.LEFT_TRIGGER) != 0))
         {
             anim.SetBool("Strafing", true);
             moveX = _xDirection * strafeSpeed * new Vector3(cam.transform.right.x,0,cam.transform.right.z);
@@ -151,7 +152,7 @@ public class CharacterController : MonoBehaviour
             }
         }
         
-        if (camScript.LockedTarget.IsLockedOn)
+        if (camScript.LockedTarget != null && camScript.LockedTarget.IsLockedOn)
         {
             transform.LookAt( new Vector3(camScript.LockedTarget.transform.position.x,transform.position.y,camScript.LockedTarget.transform.position.z));
         }
