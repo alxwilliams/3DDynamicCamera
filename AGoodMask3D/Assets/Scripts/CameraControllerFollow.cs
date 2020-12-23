@@ -93,19 +93,94 @@ public class CameraControllerFollow : MonoBehaviour
 
         DetermineCameraDistanceHeightVariables();
     }
+    
+    private void Update()
+    {
+        if(Input.GetAxis(AxisInput.LEFT_TRIGGER) == 1) // if strafe view is active
+        {
+            StrafePerspectiveSwitch();
+        }
+        else
+        {
+            PerspectiveSwitch();
+        }
+        
+        LockedOnTargetCheck();
+        
+        if (Input.GetAxis(AxisInput.RIGHT_VERTICAL) != 0)
+            onFollow = false;
+        
+        AdjustToLockedOnTarget();
+        AdjustCamera(player.transform.position + new Vector3(0,_midBodyLookHeight,0));
 
+        MoveAndArrangeTargetArrows();
+    }
+    
+    private void StrafePerspectiveSwitch()
+    {
+        if (!strafing && !strafeSpinCoroutine) //if not currently spinning
+        {
+            if (interactables[0].CloseEnough) //and a target is close enough, lock on them
+            {
+                lockedTarget = interactables[0]; 
+                lockedTarget.IsLockedOn = true;
+                hasTarget = true;
+            }
+            strafeSpinCoroutine = true;
+            StartCoroutine(SpinToBack(true,_camStartingDistanceBack));
+            onFollow = true;
+        }
+            
+        if(!strafeSpinCoroutine && !spinBackCoroutine)
+        {
+            if (Input.GetAxis(AxisInput.RIGHT_HORIZONTAL) != 0)
+                onFollow = false;
+
+            //switch between strafe perspectives based on users input and current environment
+                
+            if (lockedTarget.IsLockedOn && onFollow)
+            {
+                LockedOnPerspective();
+            }
+            else
+            {
+                ManualHorizontal();
+            }
+            if(onFollow)
+                FollowPlayerVertical();
+            else
+                ManualVertical();
+        }
+            
+        strafing = true;
+    }
+
+    private void PerspectiveSwitch()
+    {
+        //switch between perspectives based on users input and current environment
+            
+        strafing = false;
+        if(onFollow)
+        {
+            FollowPlayer();
+        }else
+        {
+            ManualPlacement();
+        }
+            
+        if (Input.GetAxis(AxisInput.RIGHT_HORIZONTAL) != 0)
+            onFollow = false;
+    }
     private void FollowPlayer()
     {
         FollowPlayerHorizontal();
         FollowPlayerVertical();
     }
-
     private void ManualPlacement()
     {
         ManualHorizontal();
         ManualVertical();
     }
-
     
     private void FollowPlayerVertical()
     {
@@ -119,8 +194,8 @@ public class CameraControllerFollow : MonoBehaviour
             if (float.IsNaN(flatDifference))
                 flatDifference = 0;
 
-            float endDistance = flatDifference / 2 + _midBodyLookHeight * 2;
-            float endHeight = (heightDifference > _lockOnTargetHeightTooHighAngleChange) ? 1.0f : (_midBodyLookHeight * 6 / 8 + (flatDifference / 3));
+            float endDistance = flatDifference / 2 + 6;
+            float endHeight = (heightDifference > _lockOnTargetHeightTooHighAngleChange) ? 5.5f : (_midBodyLookHeight * 6 / 8 + (flatDifference / 3));
             
             currentCamDistanceBack += (endDistance - currentCamDistanceBack) * Time.deltaTime;
             currentCamHeight += (endHeight - currentCamHeight) * Time.deltaTime;
@@ -208,9 +283,29 @@ public class CameraControllerFollow : MonoBehaviour
             float camHeightDiff = _manualZoomOutHeight - _manualZoomInHeight;
             float camDistanceDiff = _manualZoomOutDistance - _manualZoomInDistance;
 
-            endHeight = (currentCamDistanceBack - _manualZoomInDistance) / camDistanceDiff * camHeightDiff +
-                              _manualZoomInHeight; // i just changed these two values from auto to manual. should probably make sure they're fine
             
+            if(lockedTarget != null && lockedTarget.IsLockedOn)
+            {
+                float heightDifference = ((lockedTarget.transform.position.y + lockedTarget.YOffset) -
+                                          (player.transform.position.y + _midBodyLookHeight));
+                float flatDifference =
+                    Mathf.Sqrt(lockedTarget.CurrentDistanceFromPlayer * lockedTarget.CurrentDistanceFromPlayer -
+                               heightDifference * heightDifference);
+                
+                if (heightDifference > _lockOnTargetHeightTooHighAngleChange)
+                {
+                    endHeight = 5.5f;
+                }else
+                {
+                    endHeight = (currentCamDistanceBack - _manualZoomInDistance) / camDistanceDiff * camHeightDiff +
+                                _manualZoomInHeight;
+                }
+            }else
+            {
+                endHeight = (currentCamDistanceBack - _manualZoomInDistance) / camDistanceDiff * camHeightDiff +
+                            _manualZoomInHeight;
+            }
+
         }
         else
         {
@@ -223,8 +318,8 @@ public class CameraControllerFollow : MonoBehaviour
             if (float.IsNaN(flatDifference))
                 flatDifference = 0;
             
-            float minDistance = flatDifference / 3+ _midBodyLookHeight * 2;
-            float maxDistance = flatDifference /2 + _midBodyLookHeight * 2;
+            float minDistance = flatDifference / 3+ 10;
+            float maxDistance = flatDifference /2 + 13;
             
             if (Input.GetAxis(AxisInput.RIGHT_VERTICAL) != 0 && !angleChanging && !strafeSpinCoroutine && !spinBackCoroutine)
             {
@@ -250,7 +345,8 @@ public class CameraControllerFollow : MonoBehaviour
                 endHeight = maxDistance;
             else
                 endHeight = (((currentCamDistanceBack - minDistance) / (maxDistance - minDistance)) * //this line is the fraction of where the cam in respect to the min and max distance (ex: 4 is 3/4th in between min: 1 and max: 5)
-                         ((heightDifference * 3 / 4) +_midBodyLookHeight - 1)) + 1;
+                         ((heightDifference * 3 / 4) +4)) + 1;
+            
 
             float angleDiff = Mathf.Abs(endingAngle - startingAngle);
             
@@ -263,6 +359,9 @@ public class CameraControllerFollow : MonoBehaviour
             }
 
         }
+        
+        if (endHeight < _manualZoomInHeight + 2)
+            endHeight = _manualZoomInHeight + 2;
         
         currentCamHeight += (endHeight - currentCamHeight) * Time.deltaTime;
 
@@ -352,22 +451,8 @@ public class CameraControllerFollow : MonoBehaviour
         float startingAngle = currentAngleDegrees % 360;
         float endingAngle;
         float startingDistanceBack = currentCamDistanceBack;
-        float startingCamHeight = currentCamHeight;
         float spinTime;
 
-        /*Vector3 startingCameraLookOffset = lockedTargetPositionOffset;
-        Vector3 endingCameraLookOffset;
-
-        if (lockedTarget.IsLockedOn)
-        {
-            endingCameraLookOffset = new Vector3(,player.tr,);
-        }
-        else
-        {
-            endingCameraLookOffset = new Vector3(0,0,0);
-        }*/
-
-        
         if(lockedTarget.IsLockedOn)
         {
             spinTime = _targetStrafeLookAroundTime;
@@ -385,26 +470,19 @@ public class CameraControllerFollow : MonoBehaviour
             currentAngleVectorFromplayer = new Vector3(Mathf.Cos(currentAngleDegrees * Mathf.PI / 180), 0, Mathf.Sin(currentAngleDegrees * Mathf.PI / 180));
 
             currentCamDistanceBack = Mathf.Lerp(startingDistanceBack, distanceBack, t / spinTime);
+
+            var targetCamHeight = (_camStartingDistanceBack - _autoZoomInDistance) /
+                              (_autoZoomOutDistance - _autoZoomInDistance) *
+                              (_autoZoomOutHeight - _autoZoomInHeight) +
+                              _autoZoomInHeight;
             
             if(auto)
             {
-                currentCamHeight = Mathf.Lerp(currentCamHeight,
-                    
-                    (_camStartingDistanceBack - _autoZoomInDistance) / (_autoZoomOutDistance - _autoZoomInDistance) *
-                    (_autoZoomOutHeight - _autoZoomInHeight) +
-                    _autoZoomInHeight, //this mess of a function, this second variable is the same at the end of DetermineCameraDistanceHeightVariables() it's just got it's variables not condensed and it's the manual form
-                    
-                    t / spinTime);
+                currentCamHeight = Mathf.Lerp(currentCamHeight, targetCamHeight,t / spinTime);
             }
             else
             {
-                currentCamHeight = Mathf.Lerp(currentCamHeight,
-                    
-                    (_camStartingDistanceBack - _manualZoomInDistance) / (_manualZoomOutDistance - _manualZoomInDistance) *
-                    (_manualZoomOutHeight - _manualZoomInHeight) +
-                    _manualZoomInHeight, //this mess of a function, this second variable is the same at the end of DetermineCameraDistanceHeightVariables() it's just got it's variables not condensed and it's the manual form
-                    
-                    t / spinTime);
+                currentCamHeight = Mathf.Lerp(currentCamHeight,targetCamHeight,t / spinTime);
             }
             
             yield return null;
@@ -413,62 +491,10 @@ public class CameraControllerFollow : MonoBehaviour
         strafeSpinCoroutine = false;
         spinBackCoroutine = false;
     }
-    private void Update()
+    
+
+    private void LockedOnTargetCheck()
     {
-
-        if(Input.GetAxis(AxisInput.LEFT_TRIGGER) != 0)
-        {
-
-            if (!strafing && !strafeSpinCoroutine && !spinBackCoroutine)
-            {
-                if (interactables[0].CloseEnough)
-                {
-                    lockedTarget = interactables[0];
-                    lockedTarget.IsLockedOn = true;
-                    hasTarget = true;
-                }
-                strafeSpinCoroutine = true;
-                StartCoroutine(SpinToBack(true,_camStartingDistanceBack));
-                onFollow = true;
-            }
-            
-            if(!strafeSpinCoroutine)
-            {
-                if (Input.GetAxis(AxisInput.RIGHT_HORIZONTAL) != 0)
-                    onFollow = false;
-                
-                if (lockedTarget.IsLockedOn && onFollow)
-                {
-                    LockedOnPerspective();
-                }
-                else
-                {
-                    ManualHorizontal();
-                }
-                if(onFollow)
-                    FollowPlayerVertical();
-                else
-                    ManualVertical();
-            }
-            
-            strafing = true;
-        }
-        else
-        {
-
-            strafing = false;
-            if(onFollow)
-            {
-                FollowPlayer();
-            }else
-            {
-                ManualPlacement();
-            }
-            
-            if (Input.GetAxis(AxisInput.RIGHT_HORIZONTAL) != 0)
-                onFollow = false;
-        }
-        
         _strafeController.SetBool("StrifeOn",(strafing || strafeSpinCoroutine));
         
         if(lockedTarget != null && lockedTarget.IsLockedOn && hasTarget && (!strafeSpinCoroutine && !spinBackCoroutine) && Input.GetAxis((AxisInput.LEFT_TRIGGER)) == 0) //when strafe button is let go, don't spin the camera back but leave target
@@ -476,7 +502,7 @@ public class CameraControllerFollow : MonoBehaviour
             hasTarget = false;
             lockedTarget.IsLockedOn = false;
         }
-        else if (lockedTarget != null && lockedTarget.CloseEnough == false && hasTarget && (!strafeSpinCoroutine && !spinBackCoroutine))
+        else if (lockedTarget != null && lockedTarget.CloseEnough == false && hasTarget && (!strafeSpinCoroutine && !spinBackCoroutine) && Input.GetAxis((AxisInput.LEFT_TRIGGER)) != 0) //if strafe button is held, but the target is not close enough
         {
             lockedTarget.IsLockedOn = false;
             
@@ -494,14 +520,6 @@ public class CameraControllerFollow : MonoBehaviour
                 StartCoroutine(SpinToBack(true, currentCamDistanceBack));
             }
         }
-        
-        if (Input.GetAxis(AxisInput.RIGHT_VERTICAL) != 0)
-            onFollow = false;
-        
-        AdjustToLockedOnTarget();
-        AdjustCamera(player.transform.position + new Vector3(0,_midBodyLookHeight,0));
-
-        MoveAndArrangeTargetArrows();
     }
 
     private void AdjustToLockedOnTarget()

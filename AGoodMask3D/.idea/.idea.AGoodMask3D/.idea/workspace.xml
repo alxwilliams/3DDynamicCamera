@@ -3,8 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="d739253e-328a-4bd9-8cf8-8d845577dc1e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.AGoodMask3D/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AGoodMask3D/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CharacterController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CharacterController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,10 +57,10 @@
       <option name="pid" />
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" pid="95212">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" pid="10184">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="95212" />
+      <option name="pid" value="10184" />
       <method v="2" />
     </configuration>
   </component>
@@ -95,7 +96,9 @@
       <workItem from="1602633377740" duration="47660000" />
       <workItem from="1603769667542" duration="7232000" />
       <workItem from="1604259801539" duration="1231000" />
-      <workItem from="1607392428654" duration="2966000" />
+      <workItem from="1607392428654" duration="15390000" />
+      <workItem from="1608705035466" duration="330000" />
+      <workItem from="1608706555850" duration="4312000" />
     </task>
     <servers />
   </component>
@@ -110,46 +113,46 @@
     </state>
     <state width="515" height="466" key="DebuggerActiveHint/0.0.2560.1400/3840.489.1920.1040@0.0.2560.1400" timestamp="1601912345929" />
     <state width="832" height="395" key="DebuggerActiveHint/0.0.2560.1400/3840.489.1920.1040@3840.489.1920.1040" timestamp="1603770271256" />
-    <state width="1877" height="298" key="GridCell.Tab.0.bottom" timestamp="1603770228844">
+    <state width="1645" height="254" key="GridCell.Tab.0.bottom" timestamp="1608705366701">
       <screen x="3840" y="489" width="1920" height="1040" />
     </state>
     <state width="2517" height="298" key="GridCell.Tab.0.bottom/0.0.2560.1400/3840.489.1920.1040@0.0.2560.1400" timestamp="1603749983001" />
-    <state width="1877" height="298" key="GridCell.Tab.0.bottom/0.0.2560.1400/3840.489.1920.1040@3840.489.1920.1040" timestamp="1603770228844" />
-    <state width="1877" height="298" key="GridCell.Tab.0.center" timestamp="1603770228844">
+    <state width="1645" height="254" key="GridCell.Tab.0.bottom/0.0.2560.1400/3840.489.1920.1040@3840.489.1920.1040" timestamp="1608705366701" />
+    <state width="1645" height="254" key="GridCell.Tab.0.center" timestamp="1608705366700">
       <screen x="3840" y="489" width="1920" height="1040" />
     </state>
     <state width="2517" height="298" key="GridCell.Tab.0.center/0.0.2560.1400/3840.489.1920.1040@0.0.2560.1400" timestamp="1603749983001" />
-    <state width="1877" height="298" key="GridCell.Tab.0.center/0.0.2560.1400/3840.489.1920.1040@3840.489.1920.1040" timestamp="1603770228844" />
-    <state width="1877" height="298" key="GridCell.Tab.0.left" timestamp="1603770228844">
+    <state width="1645" height="254" key="GridCell.Tab.0.center/0.0.2560.1400/3840.489.1920.1040@3840.489.1920.1040" timestamp="1608705366700" />
+    <state width="1645" height="254" key="GridCell.Tab.0.left" timestamp="1608705366699">
       <screen x="3840" y="489" width="1920" height="1040" />
     </state>
     <state width="2517" height="298" key="GridCell.Tab.0.left/0.0.2560.1400/3840.489.1920.1040@0.0.2560.1400" timestamp="1603749983001" />
-    <state width="1877" height="298" key="GridCell.Tab.0.left/0.0.2560.1400/3840.489.1920.1040@3840.489.1920.1040" timestamp="1603770228844" />
-    <state width="1877" height="298" key="GridCell.Tab.0.right" timestamp="1603770228844">
+    <state width="1645" height="254" key="GridCell.Tab.0.left/0.0.2560.1400/3840.489.1920.1040@3840.489.1920.1040" timestamp="1608705366699" />
+    <state width="1645" height="254" key="GridCell.Tab.0.right" timestamp="1608705366701">
       <screen x="3840" y="489" width="1920" height="1040" />
     </state>
     <state width="2517" height="298" key="GridCell.Tab.0.right/0.0.2560.1400/3840.489.1920.1040@0.0.2560.1400" timestamp="1603749983001" />
-    <state width="1877" height="298" key="GridCell.Tab.0.right/0.0.2560.1400/3840.489.1920.1040@3840.489.1920.1040" timestamp="1603770228844" />
-    <state width="1877" height="298" key="GridCell.Tab.1.bottom" timestamp="1603770231338">
+    <state width="1645" height="254" key="GridCell.Tab.0.right/0.0.2560.1400/3840.489.1920.1040@3840.489.1920.1040" timestamp="1608705366701" />
+    <state width="1645" height="254" key="GridCell.Tab.1.bottom" timestamp="1608705374165">
       <screen x="3840" y="489" width="1920" height="1040" />
     </state>
     <state width="2517" height="298" key="GridCell.Tab.1.bottom/0.0.2560.1400/3840.489.1920.1040@0.0.2560.1400" timestamp="1603749985420" />
-    <state width="1877" height="298" key="GridCell.Tab.1.bottom/0.0.2560.1400/3840.489.1920.1040@3840.489.1920.1040" timestamp="1603770231338" />
-    <state width="1877" height="298" key="GridCell.Tab.1.center" timestamp="1603770231338">
+    <state width="1645" height="254" key="GridCell.Tab.1.bottom/0.0.2560.1400/3840.489.1920.1040@3840.489.1920.1040" timestamp="1608705374165" />
+    <state width="1645" height="254" key="GridCell.Tab.1.center" timestamp="1608705374165">
       <screen x="3840" y="489" width="1920" height="1040" />
     </state>
     <state width="2517" height="298" key="GridCell.Tab.1.center/0.0.2560.1400/3840.489.1920.1040@0.0.2560.1400" timestamp="1603749985420" />
-    <state width="1877" height="298" key="GridCell.Tab.1.center/0.0.2560.1400/3840.489.1920.1040@3840.489.1920.1040" timestamp="1603770231338" />
-    <state width="1877" height="298" key="GridCell.Tab.1.left" timestamp="1603770231338">
+    <state width="1645" height="254" key="GridCell.Tab.1.center/0.0.2560.1400/3840.489.1920.1040@3840.489.1920.1040" timestamp="1608705374165" />
+    <state width="1645" height="254" key="GridCell.Tab.1.left" timestamp="1608705374165">
       <screen x="3840" y="489" width="1920" height="1040" />
     </state>
     <state width="2517" height="298" key="GridCell.Tab.1.left/0.0.2560.1400/3840.489.1920.1040@0.0.2560.1400" timestamp="1603749985420" />
-    <state width="1877" height="298" key="GridCell.Tab.1.left/0.0.2560.1400/3840.489.1920.1040@3840.489.1920.1040" timestamp="1603770231338" />
-    <state width="1877" height="298" key="GridCell.Tab.1.right" timestamp="1603770231338">
+    <state width="1645" height="254" key="GridCell.Tab.1.left/0.0.2560.1400/3840.489.1920.1040@3840.489.1920.1040" timestamp="1608705374165" />
+    <state width="1645" height="254" key="GridCell.Tab.1.right" timestamp="1608705374165">
       <screen x="3840" y="489" width="1920" height="1040" />
     </state>
     <state width="2517" height="298" key="GridCell.Tab.1.right/0.0.2560.1400/3840.489.1920.1040@0.0.2560.1400" timestamp="1603749985420" />
-    <state width="1877" height="298" key="GridCell.Tab.1.right/0.0.2560.1400/3840.489.1920.1040@3840.489.1920.1040" timestamp="1603770231338" />
+    <state width="1645" height="254" key="GridCell.Tab.1.right/0.0.2560.1400/3840.489.1920.1040@3840.489.1920.1040" timestamp="1608705374165" />
     <state width="1877" height="298" key="GridCell.Tab.2.bottom" timestamp="1603769653912">
       <screen x="3840" y="489" width="1920" height="1040" />
     </state>
@@ -240,55 +243,55 @@
         </line-breakpoint>
         <line-breakpoint type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs</url>
-          <line>520</line>
+          <line>538</line>
           <properties documentPath="$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs" initialLine="462">
             <startOffsets>
-              <option value="21652" />
+              <option value="22008" />
             </startOffsets>
             <endOffsets>
-              <option value="21871" />
+              <option value="22227" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="39" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs</url>
-          <line>258</line>
+          <line>354</line>
           <properties documentPath="$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs" initialLine="258">
             <startOffsets>
-              <option value="11791" />
+              <option value="14693" />
             </startOffsets>
             <endOffsets>
-              <option value="11828" />
+              <option value="14730" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="48" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/CharacterController.cs</url>
-          <line>202</line>
-          <properties documentPath="$PROJECT_DIR$/Assets/Scripts/CharacterController.cs" initialLine="198">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Interactable.cs</url>
+          <line>25</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Scripts/Interactable.cs" initialLine="25">
             <startOffsets>
-              <option value="6970" />
+              <option value="716" />
             </startOffsets>
             <endOffsets>
-              <option value="6997" />
+              <option value="742" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="83" />
+          <option name="timeStamp" value="86" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/CharacterController.cs</url>
-          <line>206</line>
-          <properties documentPath="$PROJECT_DIR$/Assets/Scripts/CharacterController.cs" initialLine="202">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs</url>
+          <line>249</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs" initialLine="174">
             <startOffsets>
-              <option value="7039" />
+              <option value="9477" />
             </startOffsets>
             <endOffsets>
-              <option value="7091" />
+              <option value="9584" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="84" />
+          <option name="timeStamp" value="87" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
