@@ -19,7 +19,7 @@ public class Interactable : MonoBehaviour
     public static class AxisInput {
         public const string LEFT_TRIGGER = "LTrigger";
     }
-    
+
     public bool IsLockedOn
     {
         get => isLockedOn;

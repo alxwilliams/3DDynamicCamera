@@ -65,8 +65,8 @@ public class CameraControllerFollow : MonoBehaviour
     private bool angleChanging = false;
     
     
-    private Interactable[] interactables = new Interactable[6] {new Interactable(), new Interactable(), new Interactable(), new Interactable(), new Interactable(), new Interactable()};
-    private Interactable lockedTarget = new Interactable();
+    private Interactable[] interactables = new Interactable[6];
+    private Interactable lockedTarget;
 
     public Interactable LockedTarget => lockedTarget;
 
@@ -90,6 +90,12 @@ public class CameraControllerFollow : MonoBehaviour
         currentAngleDegrees = 270;
         currentCamDistanceBack = _camStartingDistanceBack;
         currentLookAtPosition = player.transform.position + new Vector3(0, _midBodyLookHeight, 0);
+
+        for (int i = 0; i < interactables.Length; i++)
+        {
+            interactables[i] = new GameObject().AddComponent<Interactable>();
+        }
+        lockedTarget = new GameObject().AddComponent<Interactable>();
 
         DetermineCameraDistanceHeightVariables();
     }
@@ -596,7 +602,7 @@ public class CameraControllerFollow : MonoBehaviour
             if (interactables[j] == null || !interactables[j].CloseEnough)
             {
                 interactables[j].AddedToList = false;
-                interactables[j] = new Interactable();
+                interactables[j] = new GameObject().AddComponent<Interactable>();
             }
             
             if (interactables[j].CurrentDistanceFromPlayer <= pivot.CurrentDistanceFromPlayer)

@@ -4,6 +4,8 @@
     <list default="true" id="d739253e-328a-4bd9-8cf8-8d845577dc1e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.AGoodMask3D/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AGoodMask3D/.idea/indexLayout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.AGoodMask3D/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AGoodMask3D/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Interactable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Interactable.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,9 +17,9 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/CameraControllerStationary.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/EE47BE73-F7EF-409C-A5E5-CE4B121745B7/ce/37bac3ba/Vector3.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/EE47BE73-F7EF-409C-A5E5-CE4B121745B7/ce/37bac3ba/Vector3.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/EE47BE73-F7EF-409C-A5E5-CE4B121745B7/01/b55c384a/Transform.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/EE47BE73-F7EF-409C-A5E5-CE4B121745B7/01/b55c384a/Transform.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/CharacterController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Interactable.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/EE47BE73-F7EF-409C-A5E5-CE4B121745B7/57/8f3fcd05/Mathf.cs" root0="SKIP_HIGHLIGHTING" />
@@ -28,9 +30,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Assets/Scripts/Interactable.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/ToonLight.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/CharacterController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Interactable.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs" />
       </list>
     </option>
@@ -97,6 +99,9 @@
       <workItem from="1607392428654" duration="15390000" />
       <workItem from="1608705035466" duration="330000" />
       <workItem from="1608706555850" duration="4913000" />
+      <workItem from="1609630174423" duration="2474000" />
+      <workItem from="1611533105053" duration="1858000" />
+      <workItem from="1616082468078" duration="685000" />
     </task>
     <servers />
   </component>
@@ -241,26 +246,26 @@
         </line-breakpoint>
         <line-breakpoint type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs</url>
-          <line>538</line>
+          <line>544</line>
           <properties documentPath="$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs" initialLine="462">
             <startOffsets>
-              <option value="22008" />
+              <option value="22090" />
             </startOffsets>
             <endOffsets>
-              <option value="22227" />
+              <option value="22309" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="39" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs</url>
-          <line>354</line>
+          <line>360</line>
           <properties documentPath="$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs" initialLine="258">
             <startOffsets>
-              <option value="14693" />
+              <option value="14775" />
             </startOffsets>
             <endOffsets>
-              <option value="14730" />
+              <option value="14812" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="48" />
@@ -270,23 +275,23 @@
           <line>25</line>
           <properties documentPath="$PROJECT_DIR$/Assets/Scripts/Interactable.cs" initialLine="25">
             <startOffsets>
-              <option value="716" />
+              <option value="712" />
             </startOffsets>
             <endOffsets>
-              <option value="742" />
+              <option value="738" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="86" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs</url>
-          <line>249</line>
+          <line>255</line>
           <properties documentPath="$PROJECT_DIR$/Assets/Scripts/CameraControllerFollow.cs" initialLine="174">
             <startOffsets>
-              <option value="9477" />
+              <option value="9559" />
             </startOffsets>
             <endOffsets>
-              <option value="9584" />
+              <option value="9666" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="87" />
